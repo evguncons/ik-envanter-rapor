@@ -36,6 +36,12 @@
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         .hide-scroll::-webkit-scrollbar { display: none; }
+        
+        /* Modal Animasyonları */
+        .modal-enter { opacity: 0; transform: scale(0.95); }
+        .modal-enter-active { opacity: 1; transform: scale(1); transition: all 0.3s ease-out; }
+        .modal-exit { opacity: 1; transform: scale(1); }
+        .modal-exit-active { opacity: 0; transform: scale(0.95); transition: all 0.2s ease-in; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 h-screen flex flex-col overflow-hidden">
@@ -91,11 +97,21 @@
         
         <!-- Sol Panel: Aday Listesi -->
         <aside class="w-full md:w-80 lg:w-96 bg-white border-r border-slate-200 flex flex-col shrink-0 h-1/3 md:h-full border-b md:border-b-0">
+            <!-- Arama Inputu -->
             <div class="p-4 border-b border-slate-100 bg-slate-50/50 shrink-0">
                 <div class="relative">
                     <input type="text" id="searchInput" oninput="filterList()" placeholder="İsim veya pozisyon ara..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-hedef-600 focus:border-transparent transition-all">
                     <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
+            </div>
+            
+            <!-- YENİ: Dönem / Sayfa Adı Filtresi -->
+            <div class="px-4 py-3 border-b border-slate-200 bg-white shrink-0">
+                <label for="periodFilter" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Dönem Filtresi</label>
+                <select id="periodFilter" onchange="filterList()" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-hedef-600 focus:border-transparent transition-all cursor-pointer">
+                    <option value="ALL">Tüm Dönemler</option>
+                    <!-- JavaScript ile Excel sayfa isimleri (Örn: HAZİRAN 2026) buraya dolacak -->
+                </select>
             </div>
             
             <div class="px-4 py-2 bg-slate-100 flex justify-between items-center border-b border-slate-200 shrink-0">
@@ -130,16 +146,28 @@
                             <h2 id="detName" class="text-xl md:text-2xl font-bold text-slate-900 break-words">Ad Soyad</h2>
                             <span id="detBadge" class="px-2 md:px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-full bg-slate-100 text-slate-600 border border-slate-200 shrink-0">Durum</span>
                         </div>
-                        <p id="detPosition" class="text-hedef-600 font-medium text-sm md:text-base">Pozisyon</p>
+                        <p id="detPosition" class="text-hedef-600 font-medium text-sm md:text-base mb-2">Pozisyon</p>
+                        
+                        <div class="flex flex-col gap-1 text-xs md:text-sm text-slate-500">
+                            <div class="flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> <span id="detEmail" class="truncate">-</span></div>
+                            <div class="flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> <span id="detPhone">-</span></div>
+                            <div class="flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> <span id="detDate">-</span></div>
+                            <!-- Dönem Etiketi -->
+                            <div class="flex items-center gap-2 mt-1"><svg class="w-4 h-4 shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> <span id="detPeriod" class="font-medium text-slate-700 bg-slate-100 px-2 py-0.5 rounded text-xs">-</span></div>
+                        </div>
                     </div>
-                    <div class="flex flex-col gap-1.5 text-xs md:text-sm text-slate-500 w-full lg:w-auto">
-                        <div class="flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> <span id="detEmail" class="truncate">-</span></div>
-                        <div class="flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> <span id="detPhone">-</span></div>
-                        <div class="flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> <span id="detDate">-</span></div>
+                    
+                    <!-- YENİ: Adayın Cevaplarını Gör Butonu -->
+                    <div class="flex flex-col items-start lg:items-end w-full lg:w-auto mt-2 lg:mt-0">
+                        <button onclick="openAnswersModal()" class="w-full lg:w-auto bg-slate-800 hover:bg-slate-900 text-white px-5 py-3 rounded-xl text-sm font-semibold transition-all shadow-md flex items-center justify-center gap-2 hover:shadow-lg transform hover:-translate-y-0.5">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                            Soru Cevaplarını İncele
+                        </button>
+                        <p class="text-[10px] text-slate-400 mt-2 text-center lg:text-right w-full">50 Soruluk Ham Veri Ekranı</p>
                     </div>
                 </div>
 
-                <!-- Sistem Değerlendirme Özeti (YENİ EKLENEN KISIM) -->
+                <!-- Sistem Değerlendirme Özeti -->
                 <div class="bg-blue-50/50 border border-blue-200 rounded-2xl p-5 md:p-6 shadow-sm">
                     <div class="flex items-center gap-2.5 mb-3">
                         <div class="bg-blue-100 p-1.5 rounded-lg">
@@ -164,7 +192,6 @@
 
                 <!-- Skor Kartları -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
-                    <!-- Genel Skor -->
                     <div class="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm">
                         <div class="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Genel Profil Skoru</div>
                         <div class="flex items-end gap-1 md:gap-2">
@@ -176,11 +203,9 @@
                         </div>
                     </div>
                     
-                    <!-- Tutarsızlık Skoru -->
                     <div class="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm">
                         <div class="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex justify-between">
-                            Tutarsızlık Skoru
-                            <span class="text-slate-400 text-[9px] md:text-[10px]">(0-16)</span>
+                            Tutarsızlık Skoru <span class="text-slate-400 text-[9px] md:text-[10px]">(0-16)</span>
                         </div>
                         <div class="flex items-end gap-2">
                             <span id="scoreTutarsizlik" class="text-3xl md:text-4xl font-black text-slate-800">0</span>
@@ -188,11 +213,9 @@
                         <p id="textTutarsizlik" class="text-xs md:text-sm font-semibold mt-2 md:mt-3">-</p>
                     </div>
 
-                    <!-- Fake Good -->
                     <div class="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm">
                         <div class="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex justify-between">
-                            Sosyal Beğenirlik
-                            <span class="text-slate-400 text-[9px] md:text-[10px]">(3-15)</span>
+                            Sosyal Beğenirlik <span class="text-slate-400 text-[9px] md:text-[10px]">(3-15)</span>
                         </div>
                         <div class="flex items-end gap-2">
                             <span id="scoreFakeGood" class="text-3xl md:text-4xl font-black text-slate-800">0</span>
@@ -203,39 +226,72 @@
 
                 <!-- Alt Bölüm: Radar & Boyutlar -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-                    
-                    <!-- Radar Grafik -->
                     <div class="bg-white border border-slate-200 rounded-xl p-4 md:p-6 shadow-sm flex flex-col min-h-[300px]">
                         <h3 class="text-xs md:text-sm font-bold text-slate-700 uppercase tracking-wider mb-2 md:mb-4">Kişilik Boyutları Dağılımı</h3>
-                        <!-- Grafiğin sığması ve kırpılmaması için relative container -->
                         <div class="flex-1 relative w-full h-full">
                             <canvas id="radarChart"></canvas>
                         </div>
                     </div>
-
-                    <!-- Boyut Barları -->
                     <div class="bg-white border border-slate-200 rounded-xl p-4 md:p-6 shadow-sm flex flex-col">
                         <h3 class="text-xs md:text-sm font-bold text-slate-700 uppercase tracking-wider mb-3 md:mb-4">Detaylı Boyut Puanları</h3>
                         <div id="dimensionsList" class="space-y-3 md:space-y-4 flex-1 overflow-y-auto pr-1 md:pr-2">
                             <!-- Boyut çubukları JS ile gelecek -->
                         </div>
                     </div>
-
                 </div>
 
             </div>
         </section>
     </main>
 
+    <!-- YENİ: Adayın Detaylı Cevapları Modal Ekranı -->
+    <div id="answersModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div id="answersModalContent" class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden modal-enter">
+            <!-- Modal Başlık -->
+            <div class="p-5 md:p-6 border-b border-slate-200 flex justify-between items-center bg-slate-50 shrink-0">
+                <div>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-800">Adayın Soru Bazlı Cevapları</h3>
+                    <p class="text-xs md:text-sm text-slate-500 mt-1" id="modalCandidateName">Ad Soyad Yükleniyor...</p>
+                </div>
+                <button onclick="closeAnswersModal()" class="text-slate-400 hover:text-slate-700 bg-slate-200 hover:bg-slate-300 p-2 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <!-- Modal İçerik (Sorular Grid) -->
+            <div class="p-5 md:p-6 overflow-y-auto flex-1 bg-slate-100/50">
+                <div id="answersGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                   <!-- JavaScript ile 50 soru kutucuğu buraya dolacak -->
+                </div>
+            </div>
+            
+            <!-- Modal Alt Bilgi -->
+            <div class="p-4 md:p-5 border-t border-slate-200 bg-white text-xs text-slate-600 shrink-0 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> <span>4-5 Puan (Olumlu Çizgi)</span></div>
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-400"></span> <span>3 Puan (Nötr / Kararsız)</span></div>
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-rose-500"></span> <span>1-2 Puan (Gelişim Alanı / Risk)</span></div>
+                </div>
+                <div class="text-slate-400 font-medium italic">* Renklendirmeler ters puanlama hesaba katılarak (gerçek etkiye göre) yapılmıştır.</div>
+            </div>
+        </div>
+    </div>
+
     <script>
         /** YAPILANDIRMA VE SABİTLER */
+        // Web App URL'niz varsa buraya yazabilirsiniz (doGet için).
+        // Yoksa mevcut Spreadsheet ID üzerinden GViz ile çekmeye devam eder.
         const SPREADSHEET_ID = "1hNDJukiVPOKf2SozjSEa3JFzz8Kqny3U21xPqdoC4tM";
+        
+        // EĞER WEB APP YAYINLADIYSANIZ:
+        // const SCRIPT_URL = "https://script.google.com/macros/s/AKfycb.../exec";
+        // ŞİMDİLİK MEVCUT SİSTEMİ KORUYORUZ (GViz):
         const SCRIPT_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json`;
 
-        // A. Ters Puanlama (Reverse Scoring) kuralına tabi olan sorular
+        // Ters Puanlama (Reverse Scoring) kuralına tabi olan sorular
         const REVERSE_QUESTIONS = [2, 4, 6, 10, 14, 16, 20, 22, 24, 26, 28, 30, 32, 34, 36, 37, 39, 41, 44, 46, 48, 50];
         
-        // B. Boyut Puanları (Kategoriler)
+        // Boyut Puanları (Kategoriler)
         const DIMENSIONS = {
             "Sorumluluk": [1, 2, 3, 4, 5, 6, 43],
             "Takım Uyumu": [7, 8, 10, 11, 12],
@@ -246,11 +302,75 @@
             "Dürüstlük / Öz Farkındalık": [37, 38, 39, 40, 41, 42]
         };
 
+        // Cevap Seçenekleri Metinleri
+        const ANSWER_LABELS = {
+            1: "Kesinlikle Katılmıyorum",
+            2: "Katılmıyorum",
+            3: "Kararsızım / Fikrim Yok",
+            4: "Katılıyorum",
+            5: "Kesinlikle Katılıyorum"
+        };
+
+        // 50 Soruluk Envanter Soru Havuzu (Kendi sorularınızla birebir değiştirebilirsiniz)
+        const QUESTIONS = [
+            "Çalışırken detaylara çok dikkat ederim ve hata yapmamaya özen gösteririm.",
+            "Kurallara ve prosedürlere sıkı sıkıya bağlı kalmak beni kısıtlar.",
+            "Verilen hedeflere ulaşmak için ekstra mesai yapmaktan çekinmem.",
+            "Uzun vadeli planlar yapmak yerine anı yaşamayı tercih ederim.",
+            "Başladığım bir işi ne olursa olsun bitirme konusunda kararlıyımdır.",
+            "İş ortamında düzenli ve tertipli olmak bana göre değildir.",
+            "Takım çalışmalarında uyumlu bir yapıya sahibimdir ve ortak kararlara uyarım.",
+            "Başkalarının fikirlerini dinlerken sabırlı ve anlayışlıyımdır.",
+            "Takım içindeki çatışmaları çözmek için aktif rol alırım.",
+            "Grup projelerinde kendi bildiğimi okumayı tercih ederim.",
+            "İş arkadaşlarıma gerektiğinde yardım etmekten memnuniyet duyarım.",
+            "Başarıyı bireysel olarak elde etmek, takımla elde etmekten daha değerlidir.",
+            "İnsanları yönlendirme ve organize etme konusunda kendimi başarılı bulurum.",
+            "Liderlik rolü üstlenmek yerine arka planda kalmayı tercih ederim.",
+            "Kriz anlarında inisiyatif alarak çözüm üretmekte hızlıyımdır.",
+            "Başkalarının sorumluluğunu almak beni strese sokar.",
+            "Vizyonumu çalışma arkadaşlarıma aktararak onları motive edebilirim.",
+            "Karar alırken altımdaki kişilerin görüşlerine de önem veririm.",
+            "Yeni şeyler öğrenmek ve kendimi geliştirmek için sürekli çaba harcarım.",
+            "Alıştığım yöntemleri değiştirmek ve yeniliklere ayak uydurmak beni zorlar.",
+            "Yapıcı eleştirileri dikkate alır ve kendimi düzeltmeye çalışırım.",
+            "Bana verilen eğitimlerin çoğunu gereksiz ve zaman kaybı bulurum.",
+            "Teknolojik gelişmeleri işime entegre etme konusunda istekliyimdir.",
+            "Yeni bir beceri öğrenirken çabuk pes etme eğilimindeyim.",
+            "Stresli durumlarda sakinliğimi koruyabilir ve mantıklı düşünebilirim.",
+            "Beklenmedik sorunlar karşısında çabuk paniğe kapılırım.",
+            "Yoğun iş temposunda bile motivasyonumu yüksek tutmayı başarırım.",
+            "Olumsuz bir geri bildirim aldığımda uzun süre etkisinde kalırım.",
+            "İş hayatımdaki zorluklar benim için birer gelişim fırsatıdır.",
+            "Sürekli değişen çalışma şartlarına adapte olmakta zorlanırım.",
+            "Karar vermeden önce tüm verileri ve ihtimalleri detaylıca incelerim.",
+            "Problemleri çözerken verilerden çok içgüdülerime güvenirim.",
+            "Karmaşık durumlarda neden-sonuç ilişkilerini kurmakta başarılıyımdır.",
+            "Raporları ve istatistiksel verileri incelemek bana sıkıcı gelir.",
+            "Alternatif çözüm yolları üreterek riskleri en aza indirmeye çalışırım.",
+            "Karşılaştığım bir sorunun kök nedenini araştırmak yerine hızlı çözümler ararım.",
+            "Hayatım boyunca hiçbir zaman yalan söylemedim.",
+            "Zayıf yönlerimin farkındayımdır ve bunları kabul edebilirim.",
+            "Bugüne kadar hiçbir işimde en ufak bir hata yapmadım.",
+            "Hatalarımdan ders çıkarır ve sorumluluğu üstlenirim.",
+            "Sinirlendiğimde bile her zaman nazik ve anlayışlı davranırım.",
+            "Başkalarına karşı dürüst ve şeffaf bir iletişim kurmayı tercih ederim.",
+            "Kendime verilen görevleri zamanında tamamlamak benim için çok önemlidir.",
+            "Teslim tarihleri (deadline) benim için esnetilebilir kavramlardır.",
+            "Baskı altında çalışırken iş kalitemden ödün vermem.",
+            "Stresli zamanlarda hata yapma olasılığım oldukça artar.",
+            "Kararlarımı alırken her zaman objektif verilere dayanırım.",
+            "Mantıklı nedenler olmasa da hislerime göre karar aldığım çok olur.",
+            "İş arkadaşlarımla uyum içinde çalışmak benim için çok önemlidir.",
+            "İnsanlarla sürekli iletişim halinde olmak beni çok yorar."
+        ];
+
         // Durum tutucular
         let allCandidates = [];
         let radarChartInstance = null;
         let selectedCandidateId = null; 
         let dataFetchInterval = null;
+        let availablePeriods = new Set(); // YENİ: Dönemleri tutacağımız küme
 
         /** GİRİŞ SİSTEMİ (LOGIN) */
         function handleLogin() {
@@ -276,12 +396,11 @@
         function startDashboard() {
             fetchData();
             if(dataFetchInterval) clearInterval(dataFetchInterval);
-            dataFetchInterval = setInterval(fetchData, 5000);
+            dataFetchInterval = setInterval(fetchData, 10000); // Yoğunluğu azaltmak için 10 saniyeye çıkarıldı
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             const isAuthenticated = sessionStorage.getItem('hedef_ik_auth') === 'true';
-            
             if (isAuthenticated) {
                 document.getElementById('loginScreen').classList.add('hidden');
                 startDashboard();
@@ -301,70 +420,90 @@
 
         function hideErrorBanner() {
             const banner = document.getElementById('networkErrorBanner');
-            if (banner) {
-                banner.classList.add('hidden');
-            }
+            if (banner) banner.classList.add('hidden');
         }
 
-        /** VERİ ÇEKME - DOĞRUDAN GOOGLE SHEETS API (SÜTUN İNDEXİNE GÖRE HARİTALAMA) */
+        /** YENİ: TARİHTEN DÖNEM (AY/YIL) ÇIKARTMA FONKSİYONU */
+        function getPeriodFromDate(dateStr) {
+            if (!dateStr) return "Bilinmeyen Dönem";
+            let month = -1, year = -1;
+            
+            // GViz Formatı: Date(2026,5,16,15,30,0) (Aylar 0 indexlidir)
+            const gvizMatch = dateStr.match(/Date\((\d+),\s*(\d+)/);
+            if (gvizMatch) {
+                year = parseInt(gvizMatch[1]);
+                month = parseInt(gvizMatch[2]);
+            } else {
+                // Standart String Formatı: 16.06.2026 veya 2026-06-16
+                const parts = dateStr.split(/[-./\s]/);
+                if (parts.length >= 3) {
+                    if (parts[0].length === 4) { // YYYY-MM-DD
+                        year = parseInt(parts[0]); month = parseInt(parts[1]) - 1;
+                    } else { // DD.MM.YYYY
+                        year = parseInt(parts[2]); month = parseInt(parts[1]) - 1;
+                    }
+                }
+            }
+            
+            if (month >= 0 && month <= 11 && year > 2000) {
+                const months = ["OCAK", "ŞUBAT", "MART", "NİSAN", "MAYIS", "HAZİRAN", "TEMMUZ", "AĞUSTOS", "EYLÜL", "EKİM", "KASIM", "ARALIK"];
+                return months[month] + " " + year;
+            }
+            return "Genel Havuz";
+        }
+
+        /** VERİ ÇEKME - HEM WEB APP JSON HEM GVIZ JSON DESTEKLİ */
         async function fetchData() {
             const syncIcon = document.querySelector('#btnSync svg');
 
             try {
                 if(syncIcon) syncIcon.classList.add('animate-spin');
                 
-                const cacheBusterUrl = SCRIPT_URL + "&t=" + new Date().getTime();
+                const cacheBusterUrl = SCRIPT_URL + (SCRIPT_URL.includes('?') ? '&' : '?') + "t=" + new Date().getTime();
                 const response = await fetch(cacheBusterUrl);
                 
-                if (!response.ok) {
-                    throw new Error("HTTP Status: " + response.status);
-                }
+                if (!response.ok) throw new Error("HTTP Status: " + response.status);
 
                 const text = await response.text();
-                const jsonString = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
-                const jsonData = JSON.parse(jsonString);
+                let rawData = [];
 
-                if (jsonData.status === "error") {
-                    throw new Error(jsonData.errors[0].message);
+                // YENİ: App Script (Web App) JSON Dizisi mi yoksa GViz Formatı mı kontrolü
+                if (text.trim().startsWith('[')) {
+                    rawData = JSON.parse(text);
+                } else {
+                    const jsonString = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+                    const jsonData = JSON.parse(jsonString);
+
+                    if (jsonData.status === "error") throw new Error(jsonData.errors[0].message);
+
+                    jsonData.table.rows.forEach((r) => {
+                        if (!r || !r.c) return;
+                        const getCellValue = (colIndex) => {
+                            const cell = r.c[colIndex];
+                            if (!cell) return "";
+                            return (cell.f !== undefined && cell.f !== null) ? cell.f : (cell.v !== null && cell.v !== undefined ? cell.v : "");
+                        };
+
+                        const dateStr = getCellValue(0).toString().trim();
+                        const adSoyad = getCellValue(1).toString().trim();
+                        
+                        if (adSoyad.toLowerCase().includes("ad soyad") || dateStr.toLowerCase().includes("tarih")) return;
+                        if (!dateStr && !adSoyad && !getCellValue(5)) return;
+
+                        let rowObj = {
+                            "Tarih": dateStr,
+                            "Ad Soyad": adSoyad || "İsimsiz Aday",
+                            "E-posta": getCellValue(2),
+                            "Telefon": getCellValue(3),
+                            "Pozisyon": getCellValue(4)
+                        };
+
+                        for (let q = 1; q <= 50; q++) {
+                            rowObj[`q${q}`] = getCellValue(4 + q);
+                        }
+                        rawData.push(rowObj);
+                    });
                 }
-
-                const rawData = [];
-                
-                jsonData.table.rows.forEach((r, rowIndex) => {
-                    if (!r || !r.c) return;
-
-                    const getCellValue = (colIndex) => {
-                        const cell = r.c[colIndex];
-                        if (!cell) return "";
-                        return (cell.f !== undefined && cell.f !== null) ? cell.f : (cell.v !== null && cell.v !== undefined ? cell.v : "");
-                    };
-
-                    const adSoyad = getCellValue(1).toString().trim();
-                    const dateStr = getCellValue(0).toString().trim();
-                    
-                    // Başlık satırıysa (ilk satırsa) komple atla
-                    if (adSoyad.toLowerCase().includes("ad soyad") || dateStr.toLowerCase().includes("tarih")) return;
-
-                    // BOŞ SATIR KONTROLÜ: Tarih yoksa, isim yoksa ve en azından Soru 1 bile boşsa bu satırı tamamen atla.
-                    if (!dateStr && !adSoyad && !getCellValue(5)) return;
-
-                    let rowObj = {
-                        "Tarih": dateStr,
-                        // Eğer form doldurulmuş ama ismini yazmayı unutmuşsa sistem "İsimsiz Aday" olarak kabul eder, satırı kaybetmez!
-                        "Ad Soyad": adSoyad || "İsimsiz Aday",
-                        "E-posta": getCellValue(2),
-                        "Telefon": getCellValue(3),
-                        "Pozisyon": getCellValue(4)
-                    };
-
-                    // Soruları dinamik olarak al (İndex 5'ten başlayıp 50 tane oku)
-                    for (let q = 1; q <= 50; q++) {
-                        const colIndex = 4 + q; // Soru 1, index 5'te yer alıyor
-                        rowObj[`q${q}`] = getCellValue(colIndex);
-                    }
-
-                    rawData.push(rowObj);
-                });
                 
                 if (rawData.length > 0) {
                     processData(rawData);
@@ -376,30 +515,37 @@
 
             } catch (error) {
                 console.error("Veri çekme hatası:", error);
-                if (allCandidates.length === 0) {
-                    showErrorBanner("Veri çekilemiyor. İnternet bağlantınızı kontrol edin.");
-                }
+                if (allCandidates.length === 0) showErrorBanner("Veri çekilemiyor. İnternet bağlantınızı kontrol edin.");
             } finally {
                 if(syncIcon) syncIcon.classList.remove('animate-spin');
             }
         }
 
-        /** ALGORİTMA: VERİ İŞLEME VE HESAPLAMA (Tüm Kuralların Kalbi) */
+        /** ALGORİTMA: VERİ İŞLEME VE HESAPLAMA */
         function processData(rawData) {
+            let tempPeriods = new Set();
+
             allCandidates = rawData.map((row, index) => {
                 let processedAnswers = {};
                 let rawAnswersForMetrics = {};
                 let totalScoreSum = 0;
 
-                // 1. Cevapları al ve Ters Puanlama (Reverse Scoring) Uygula
+                // Adayın Dönemini (Ay/Yıl) Belirleme
+                // Web App "SheetName" gönderiyorsa onu kullan, yoksa Tarihten hesapla.
+                let period = row["SheetName"] || getPeriodFromDate(row["Tarih"]);
+                tempPeriods.add(period);
+
+                // Cevapları alma ve ters puanlama
                 for(let i=1; i<=50; i++) {
-                    let val = Number(row[`q${i}`]);
+                    // Veri "q1" veya "Soru 1" anahtarıyla gelebilir
+                    let valRaw = row[`q${i}`];
+                    if (valRaw === undefined) valRaw = row[`Soru ${i}`];
+                    
+                    let val = Number(valRaw);
                     if (isNaN(val) || val < 1 || val > 5) val = 3; 
                     
-                    // Ham cevapları (Risk hesaplamaları için) bir kenara kaydediyoruz
-                    rawAnswersForMetrics[i] = val;
+                    rawAnswersForMetrics[i] = val; // Ham cevapları kaydet
                     
-                    // Belirtilen array içindeki soruları 6'dan çıkartarak tersine çeviriyoruz
                     if (REVERSE_QUESTIONS.includes(i)) {
                         processedAnswers[i] = 6 - val;
                     } else {
@@ -408,60 +554,43 @@
                     totalScoreSum += processedAnswers[i];
                 }
 
-                // B. Boyut Skoru Hesaplama (Ortalaması alınarak % bazında skor çıkarılır)
+                // Boyut Skoru Hesaplama
                 let dimScores = {};
                 for(let dim in DIMENSIONS) {
                     let questions = DIMENSIONS[dim];
                     let sum = 0;
                     questions.forEach(q => sum += processedAnswers[q]);
-                    let maxVal = questions.length * 5; // Formül: Maksimum Puan
+                    let maxVal = questions.length * 5; 
                     dimScores[dim] = Math.round((sum / maxVal) * 100);
                 }
 
-                // C.1 Genel Skor (Tüm 50 sorunun ortalaması, % cinsinden)
+                // Genel Skor, Fake Good, Tutarsızlık
                 let genelSkor = Math.round((totalScoreSum / 250) * 100);
-
-                // C.2 Fake Good (Sosyal Beğenirlik - Kendini kusursuz gösterme)
                 let fakeGoodSum = rawAnswersForMetrics[37] + rawAnswersForMetrics[39] + rawAnswersForMetrics[41];
                 let fakeGoodAvg = fakeGoodSum / 3;
 
-                // C.3 Tutarlılık Çelişkileri (Fark Analizi)
                 let tutarsizlik = 
                     Math.abs(rawAnswersForMetrics[43] - rawAnswersForMetrics[44]) +
                     Math.abs(rawAnswersForMetrics[45] - rawAnswersForMetrics[46]) +
                     Math.abs(rawAnswersForMetrics[47] - rawAnswersForMetrics[48]) +
                     Math.abs(rawAnswersForMetrics[49] - rawAnswersForMetrics[50]);
 
-                // D. Otomatik Karar Kuralları ve Badge Basılması
+                // Karar Kuralları
                 let badge = { text: "Bilinmiyor", style: "bg-slate-100 text-slate-700" };
-                
-                if (genelSkor < 50) {
-                    badge = { text: "Elenebilir", style: "bg-red-100 text-red-700 border-red-200" };
-                } else if (tutarsizlik > 6 || fakeGoodAvg > 4) {
-                    badge = { text: "Dikkatli İncelenmeli", style: "bg-orange-100 text-orange-700 border-orange-200" };
-                } else if (genelSkor > 75 && tutarsizlik < 4 && fakeGoodAvg < 3) {
-                    badge = { text: "Güçlü Aday", style: "bg-emerald-100 text-emerald-700 border-emerald-200" };
-                } else if (genelSkor >= 60 && genelSkor <= 75 && tutarsizlik < 6) {
-                    badge = { text: "Mülakat Önerilir", style: "bg-blue-100 text-blue-700 border-blue-200" };
-                } else {
-                    badge = { text: "Ortalama Profil", style: "bg-slate-100 text-slate-700 border-slate-300" };
-                }
+                if (genelSkor < 50) { badge = { text: "Elenebilir", style: "bg-red-100 text-red-700 border-red-200" }; } 
+                else if (tutarsizlik > 6 || fakeGoodAvg > 4) { badge = { text: "Dikkatli İncelenmeli", style: "bg-orange-100 text-orange-700 border-orange-200" }; } 
+                else if (genelSkor > 75 && tutarsizlik < 4 && fakeGoodAvg < 3) { badge = { text: "Güçlü Aday", style: "bg-emerald-100 text-emerald-700 border-emerald-200" }; } 
+                else if (genelSkor >= 60 && genelSkor <= 75 && tutarsizlik < 6) { badge = { text: "Mülakat Önerilir", style: "bg-blue-100 text-blue-700 border-blue-200" }; } 
+                else { badge = { text: "Ortalama Profil", style: "bg-slate-100 text-slate-700 border-slate-300" }; }
 
-                // --- SİSTEM DEĞERLENDİRME ÖZETİ METİNLERİ ---
+                // Özet Metinler
                 let summaryMainText = "";
-                if (badge.text === "Elenebilir") {
-                    summaryMainText = "Adayın envanter skorları ve yetkinlik uyumu kurum standartlarımızın altındadır. Bu aşamada işe alım sürecine devam edilmesi tavsiye edilmez.";
-                } else if (badge.text === "Dikkatli İncelenmeli") {
-                    summaryMainText = "Profilde yüksek tutarsızlık veya sosyal beğenirlik (manipülasyon) riski tespit edilmiştir. Aday testi yanıltıcı doldurmuş olabilir. Mülakata alınacaksa çapraz sorularla detaylı analiz yapılmalıdır.";
-                } else if (badge.text === "Güçlü Aday") {
-                    summaryMainText = "Adayın envanter sonuçları yüksek potansiyele işaret etmektedir. Çelişki barındırmayan, dürüst ve pozitif bir profil çizmektedir. Öncelikli olarak mülakata alınması şiddetle önerilir.";
-                } else if (badge.text === "Mülakat Önerilir") {
-                    summaryMainText = "Aday temel beklentileri karşılayan, sağlıklı ve tutarlı bir profil çizmektedir. Herhangi bir manipülasyon veya çelişki riski görülmemiştir. Bir sonraki aşama olan yetkinlik mülakatına davet edilebilir.";
-                } else {
-                    summaryMainText = "Aday asgari standartları karşılamaktadır ancak belirgin bir üstünlüğü bulunmamaktadır. Açık pozisyonun aciliyetine ve ihtiyaca göre alternatif adaylar arasında değerlendirilebilir.";
-                }
+                if (badge.text === "Elenebilir") summaryMainText = "Adayın envanter skorları ve yetkinlik uyumu kurum standartlarımızın altındadır. Bu aşamada işe alım sürecine devam edilmesi tavsiye edilmez.";
+                else if (badge.text === "Dikkatli İncelenmeli") summaryMainText = "Profilde yüksek tutarsızlık veya sosyal beğenirlik (manipülasyon) riski tespit edilmiştir. Aday testi yanıltıcı doldurmuş olabilir. Mülakata alınacaksa çapraz sorularla detaylı analiz yapılmalıdır.";
+                else if (badge.text === "Güçlü Aday") summaryMainText = "Adayın envanter sonuçları yüksek potansiyele işaret etmektedir. Çelişki barındırmayan, dürüst ve pozitif bir profil çizmektedir. Öncelikli olarak mülakata alınması şiddetle önerilir.";
+                else if (badge.text === "Mülakat Önerilir") summaryMainText = "Aday temel beklentileri karşılayan, sağlıklı ve tutarlı bir profil çizmektedir. Herhangi bir manipülasyon veya çelişki riski görülmemiştir. Bir sonraki aşama olan yetkinlik mülakatına davet edilebilir.";
+                else summaryMainText = "Aday asgari standartları karşılamaktadır ancak belirgin bir üstünlüğü bulunmamaktadır. Açık pozisyonun aciliyetine ve ihtiyaca göre alternatif adaylar arasında değerlendirilebilir.";
 
-                // En Yüksek ve En Düşük Boyutu Bulma
                 let highestDim = Object.keys(dimScores).reduce((a, b) => dimScores[a] > dimScores[b] ? a : b);
                 let lowestDim = Object.keys(dimScores).reduce((a, b) => dimScores[a] < dimScores[b] ? a : b);
                 let summaryDimText = `En güçlü olduğu yetkinlik <strong>${highestDim} (%${dimScores[highestDim]})</strong>, eğitim ve geribildirimle en çok desteklenmesi gereken alanı ise <strong>${lowestDim} (%${dimScores[lowestDim]})</strong> olarak ölçülmüştür.`;
@@ -473,34 +602,53 @@
                         position: row["Pozisyon"] || "Belirtilmemiş",
                         email: row["E-posta"] || "-",
                         phone: row["Telefon"] || "-",
-                        date: row["Tarih"] || "-"
+                        date: row["Tarih"] || "-",
+                        period: period // Adayın dönemi
                     },
                     metrics: {
-                        genelSkor,
-                        tutarsizlik,
-                        fakeGoodSum,
-                        dimScores,
-                        badge,
-                        summaryMainText,
-                        summaryDimText
+                        genelSkor, tutarsizlik, fakeGoodSum, dimScores, badge, summaryMainText, summaryDimText,
+                        rawAnswers: rawAnswersForMetrics, // Modal için ham cevaplar
+                        processedAnswers: processedAnswers // Modal renklendirmesi için işlenmiş cevaplar
                     }
                 };
             });
 
-            // Listeyi yeniden çiz (ancak son eklenen adayların görünmesi için tersten sıralayarak en yeniyi üste alabiliriz)
-            allCandidates.reverse();
-
-            filterList();
+            allCandidates.reverse(); // En yeniyi üste al
+            updatePeriodDropdown(tempPeriods); // Dönem filtresini güncelle
+            filterList(); // Listeyi render et (Filtreyi de uygulayarak)
 
             if (selectedCandidateId !== null) {
                 const stillExists = allCandidates.find(c => c.id === selectedCandidateId);
-                if (stillExists) {
-                    selectCandidate(selectedCandidateId, true);
-                } else {
+                if (stillExists) selectCandidate(selectedCandidateId, true);
+                else {
                     document.getElementById('emptyState').classList.remove('hidden');
                     document.getElementById('reportContent').classList.add('hidden');
                     selectedCandidateId = null;
                 }
+            }
+        }
+
+        /** YENİ: DÖNEM FİLTRESİNİ GÜNCELLEME */
+        function updatePeriodDropdown(newPeriods) {
+            const selectEl = document.getElementById('periodFilter');
+            const currentVal = selectEl.value;
+            
+            // Yeni dönemleri global kümeye ekle
+            newPeriods.forEach(p => availablePeriods.add(p));
+            
+            // İçeriği yeniden oluştur
+            let optionsHTML = '<option value="ALL">Tüm Dönemler</option>';
+            // Set'i Array'e çevirip alfabetik sıralayalım (Tersine sıralamak yılları daha iyi gösterebilir)
+            let sortedPeriods = Array.from(availablePeriods).sort().reverse();
+            
+            sortedPeriods.forEach(p => {
+                optionsHTML += `<option value="${p}">${p}</option>`;
+            });
+            
+            selectEl.innerHTML = optionsHTML;
+            // Eski seçimi korumaya çalış
+            if(Array.from(availablePeriods).includes(currentVal)) {
+                selectEl.value = currentVal;
             }
         }
 
@@ -535,20 +683,23 @@
             });
         }
 
-        /** ARAMA FİLTRESİ */
+        /** ARAMA VE DÖNEM FİLTRESİ (BİRLEŞTİRİLDİ) */
         function filterList() {
             const query = (document.getElementById('searchInput') || {value: ""}).value.toLowerCase();
-            const filtered = allCandidates.filter(c => 
-                c.info.name.toLowerCase().includes(query) || 
-                c.info.position.toLowerCase().includes(query)
-            );
+            const period = document.getElementById('periodFilter').value;
+            
+            const filtered = allCandidates.filter(c => {
+                const matchesSearch = c.info.name.toLowerCase().includes(query) || c.info.position.toLowerCase().includes(query);
+                const matchesPeriod = (period === "ALL" || c.info.period === period);
+                return matchesSearch && matchesPeriod;
+            });
+            
             renderList(filtered);
         }
 
         /** ARAYÜZ: ADAY SEÇİMİ VE DETAY EKRANI */
         function selectCandidate(id, isAutoRefresh = false) {
             selectedCandidateId = id; 
-
             const candidate = allCandidates.find(c => c.id === id);
             if (!candidate) return;
 
@@ -560,33 +711,31 @@
             const content = document.getElementById('reportContent');
             content.classList.remove('hidden');
             
-            if (!isAutoRefresh) {
-                setTimeout(() => content.classList.remove('opacity-0'), 50);
-            } else {
-                content.classList.remove('opacity-0');
-            }
+            if (!isAutoRefresh) setTimeout(() => content.classList.remove('opacity-0'), 50);
+            else content.classList.remove('opacity-0');
 
             document.getElementById('detName').innerText = candidate.info.name;
             document.getElementById('detPosition').innerText = candidate.info.position;
             document.getElementById('detEmail').innerText = candidate.info.email;
             document.getElementById('detPhone').innerText = candidate.info.phone;
-            document.getElementById('detDate').innerText = candidate.info.date;
+            
+            // Tarih ve YENİ: Dönem Gösterimi
+            let displayDate = candidate.info.date;
+            if (displayDate.startsWith('Date')) displayDate = "Tarih Formatı Dönüştürülüyor..."; // GViz formatlı geldiyse
+            document.getElementById('detDate').innerText = displayDate;
+            document.getElementById('detPeriod').innerText = candidate.info.period;
 
             const badgeEl = document.getElementById('detBadge');
             badgeEl.innerText = candidate.metrics.badge.text;
             badgeEl.className = `px-2 md:px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-full border ${candidate.metrics.badge.style} shrink-0`;
 
-            // ÖZET METİNLERİNİ EKRANA BAS
             document.getElementById('summaryMainText').innerText = candidate.metrics.summaryMainText;
             document.getElementById('summaryDimText').innerHTML = candidate.metrics.summaryDimText;
 
             document.getElementById('scoreGenel').innerText = candidate.metrics.genelSkor;
             const barGenel = document.getElementById('barGenel');
             barGenel.style.width = candidate.metrics.genelSkor + '%';
-            barGenel.className = `h-full transition-all duration-1000 ${
-                candidate.metrics.genelSkor > 75 ? 'bg-emerald-500' : 
-                (candidate.metrics.genelSkor >= 60 ? 'bg-blue-500' : 'bg-red-500')
-            }`;
+            barGenel.className = `h-full transition-all duration-1000 ${candidate.metrics.genelSkor > 75 ? 'bg-emerald-500' : (candidate.metrics.genelSkor >= 60 ? 'bg-blue-500' : 'bg-red-500')}`;
 
             const tScore = candidate.metrics.tutarsizlik;
             document.getElementById('scoreTutarsizlik').innerText = tScore;
@@ -605,11 +754,8 @@
             const riskBanner = document.getElementById('riskBanner');
             if (tScore > 6 || fgScore >= 13) {
                 riskBanner.classList.remove('hidden');
-                document.getElementById('riskText').innerText = 
-                    `${fgScore >= 13 ? 'Sosyal Beğenirlik (Manipülasyon) puanı çok yüksek. ' : ''}${tScore > 6 ? 'Cevaplar arası tutarsızlık tespit edildi.' : ''}`;
-            } else {
-                riskBanner.classList.add('hidden');
-            }
+                document.getElementById('riskText').innerText = `${fgScore >= 13 ? 'Sosyal Beğenirlik (Manipülasyon) puanı çok yüksek. ' : ''}${tScore > 6 ? 'Cevaplar arası tutarsızlık tespit edildi.' : ''}`;
+            } else riskBanner.classList.add('hidden');
 
             const dimList = document.getElementById('dimensionsList');
             dimList.innerHTML = "";
@@ -618,8 +764,7 @@
                 dimList.innerHTML += `
                     <div>
                         <div class="flex justify-between text-[11px] md:text-xs font-bold text-slate-600 mb-1">
-                            <span>${dim}</span>
-                            <span class="text-hedef-600">%${val}</span>
+                            <span>${dim}</span><span class="text-hedef-600">%${val}</span>
                         </div>
                         <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                             <div class="h-full bg-hedef-500 rounded-full" style="width: ${val}%"></div>
@@ -631,15 +776,96 @@
             drawRadar(candidate.metrics.dimScores);
         }
 
-        /** CHART.JS RADAR GRAFİĞİ (YAZILARIN KIRPILMAMASI İÇİN ÖZEL AYARLANDI) */
+        /** YENİ: DETAYLI CEVAPLAR MODALI FONKSİYONLARI */
+        function openAnswersModal() {
+            if (selectedCandidateId === null) return;
+            const candidate = allCandidates.find(c => c.id === selectedCandidateId);
+            if (!candidate) return;
+
+            // İsim güncelleme
+            document.getElementById('modalCandidateName').innerText = `${candidate.info.name} - ${candidate.info.position}`;
+
+            const grid = document.getElementById('answersGrid');
+            grid.innerHTML = "";
+
+            // 50 soruyu dön ve kutucukları oluştur
+            for(let i=1; i<=50; i++) {
+                const rawAns = candidate.metrics.rawAnswers[i];
+                const procAns = candidate.metrics.processedAnswers[i];
+                
+                // Renk belirleme (İşlenmiş skora göre gerçek etkiyi yansıtırız)
+                let bgColor = "bg-slate-50", textColor = "text-slate-700", borderColor = "border-slate-200";
+                
+                if (procAns >= 4) {
+                    bgColor = "bg-emerald-50/50"; textColor = "text-emerald-700"; borderColor = "border-emerald-200";
+                } else if (procAns <= 2) {
+                    bgColor = "bg-rose-50/50"; textColor = "text-rose-700"; borderColor = "border-rose-200";
+                } else {
+                    bgColor = "bg-amber-50/50"; textColor = "text-amber-700"; borderColor = "border-amber-200";
+                }
+
+                // Ters sorularda uyarı ikonu (Tersten puanlandığını İK'ya belli etmek için)
+                const isReverse = REVERSE_QUESTIONS.includes(i);
+                const reverseIcon = isReverse ? `<div class="flex items-center gap-1 text-[10px] text-slate-400 bg-white px-2 py-1 rounded-md border border-slate-200 shadow-sm"><svg class="w-3 h-3" title="Ters Puanlanan Soru" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg> Ters Soru</div>` : '';
+
+                const questionText = QUESTIONS[i - 1] || `Soru metni bulunamadı.`;
+                const answerText = ANSWER_LABELS[rawAns] || `Bilinmeyen Cevap`;
+
+                const box = document.createElement('div');
+                box.className = `relative flex flex-col p-4 md:p-5 rounded-2xl border ${bgColor} ${borderColor} shadow-sm transition-all hover:shadow-md`;
+                box.innerHTML = `
+                    <div class="flex justify-between items-start mb-3 gap-2">
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0 bg-white px-2 py-1 rounded border border-slate-200">Soru ${i}</span>
+                        ${reverseIcon}
+                    </div>
+                    <p class="text-sm md:text-[15px] font-medium text-slate-800 mb-4 flex-1 leading-relaxed">${questionText}</p>
+                    <div class="inline-flex items-center gap-2 w-max px-3 py-1.5 rounded-lg bg-white border ${borderColor} shadow-sm">
+                        <div class="flex items-center justify-center w-6 h-6 rounded-md ${procAns >= 4 ? 'bg-emerald-100 text-emerald-700' : (procAns <= 2 ? 'bg-rose-100 text-rose-700' : 'bg-amber-100 text-amber-700')} font-bold text-sm shrink-0">
+                            ${rawAns}
+                        </div>
+                        <span class="text-xs md:text-sm font-bold ${textColor}">${answerText}</span>
+                    </div>
+                `;
+                grid.appendChild(box);
+            }
+
+            const modal = document.getElementById('answersModal');
+            const content = document.getElementById('answersModalContent');
+            
+            modal.classList.remove('hidden');
+            // Animasyon trigerlamak için kısa gecikme
+            setTimeout(() => {
+                content.classList.remove('modal-enter');
+                content.classList.add('modal-enter-active');
+            }, 10);
+        }
+
+        function closeAnswersModal() {
+            const modal = document.getElementById('answersModal');
+            const content = document.getElementById('answersModalContent');
+            
+            content.classList.remove('modal-enter-active');
+            content.classList.add('modal-exit-active');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                content.classList.remove('modal-exit-active');
+                content.classList.add('modal-enter');
+            }, 200);
+        }
+
+        // Modal dışına tıklayınca kapatma
+        document.getElementById('answersModal').addEventListener('click', function(e) {
+            if (e.target === this) closeAnswersModal();
+        });
+
+        /** CHART.JS RADAR GRAFİĞİ */
         function drawRadar(scores) {
             const ctx = document.getElementById('radarChart').getContext('2d');
             const labels = Object.keys(scores);
             const data = Object.values(scores);
 
-            if (radarChartInstance) {
-                radarChartInstance.destroy();
-            }
+            if (radarChartInstance) radarChartInstance.destroy();
 
             radarChartInstance = new Chart(ctx, {
                 type: 'radar',
@@ -648,7 +874,7 @@
                     datasets: [{
                         label: 'Skor (%)',
                         data: data,
-                        backgroundColor: 'rgba(194, 24, 91, 0.2)', // #c2185b with opacity
+                        backgroundColor: 'rgba(194, 24, 91, 0.2)',
                         borderColor: '#c2185b',
                         pointBackgroundColor: '#c2185b',
                         pointBorderColor: '#fff',
@@ -660,17 +886,8 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 25,
-                            bottom: 25,
-                            left: 20,
-                            right: 20
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false }
-                    },
+                    layout: { padding: { top: 25, bottom: 25, left: 20, right: 20 } },
+                    plugins: { legend: { display: false } },
                     scales: {
                         r: {
                             angleLines: { color: 'rgba(0, 0, 0, 0.05)' },
@@ -678,7 +895,6 @@
                             pointLabels: {
                                 font: { family: "'Inter', sans-serif", size: 10, weight: '600' },
                                 color: '#475569',
-                                // Uzun boyut isimlerini iki satıra bölerek kırpılmayı (%100) önler
                                 callback: function(word) {
                                     if(word === "Dürüstlük / Öz Farkındalık") return ["Dürüstlük /", "Öz Farkındalık"];
                                     if(word === "Analitik Karar Verme") return ["Analitik Karar", "Verme"];
@@ -688,12 +904,7 @@
                                     return word;
                                 }
                             },
-                            ticks: {
-                                stepSize: 20,
-                                display: false,
-                                max: 100,
-                                min: 0
-                            }
+                            ticks: { stepSize: 20, display: false, max: 100, min: 0 }
                         }
                     }
                 }
