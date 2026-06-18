@@ -42,6 +42,10 @@
         .modal-enter-active { opacity: 1; transform: scale(1); transition: all 0.3s ease-out; }
         .modal-exit { opacity: 1; transform: scale(1); }
         .modal-exit-active { opacity: 0; transform: scale(0.95); transition: all 0.2s ease-in; }
+        
+        /* Pagination Animasyon */
+        .page-fade-enter { opacity: 0; transform: translateY(10px); }
+        .page-fade-enter-active { opacity: 1; transform: translateY(0); transition: all 0.3s ease-out; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 h-screen flex flex-col overflow-hidden">
@@ -137,104 +141,136 @@
             </div>
 
             <!-- Rapor İçeriği -->
-            <div id="reportContent" class="max-w-5xl mx-auto space-y-4 md:space-y-6 hidden opacity-0 transition-opacity duration-300 pb-10">
+            <div id="reportContent" class="max-w-6xl mx-auto space-y-6 hidden opacity-0 transition-opacity duration-300 pb-12">
                 
-                <!-- Üst Profil Kartı -->
-                <div class="bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-200 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-                    <div class="w-full lg:w-auto">
-                        <div class="flex flex-wrap items-center gap-2 md:gap-3 mb-1">
-                            <h2 id="detName" class="text-xl md:text-2xl font-bold text-slate-900 break-words">Ad Soyad</h2>
-                            <span id="detBadge" class="px-2 md:px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-full bg-slate-100 text-slate-600 border border-slate-200 shrink-0">Durum</span>
+                <!-- 1. YENİ ÜST PROFİL KARTI (PREMIUM DARK THEME) -->
+                <div class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-hedef-900 rounded-2xl p-6 md:p-8 shadow-2xl flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 border border-slate-700/50">
+                    <!-- Dekoratif Işık Efekti -->
+                    <div class="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-hedef-500 opacity-20 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-48 h-48 bg-blue-500 opacity-10 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <div class="relative z-10 w-full lg:w-auto">
+                        <div class="flex flex-wrap items-center gap-3 mb-2">
+                            <h2 id="detName" class="text-2xl md:text-3xl font-black text-white tracking-tight">Ad Soyad</h2>
+                            <span id="detBadge" class="px-3 py-1 text-[11px] font-bold uppercase tracking-wider rounded-md border shrink-0 shadow-sm">Durum</span>
                         </div>
-                        <p id="detPosition" class="text-hedef-600 font-medium text-sm md:text-base mb-2">Pozisyon</p>
+                        <p id="detPosition" class="text-hedef-400 font-semibold text-sm md:text-base mb-4">Pozisyon</p>
                         
-                        <div class="flex flex-col gap-1 text-xs md:text-sm text-slate-500">
-                            <div class="flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> <span id="detEmail" class="truncate">-</span></div>
-                            <div class="flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> <span id="detPhone">-</span></div>
-                            <div class="flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> <span id="detDate">-</span></div>
-                            <!-- Dönem Etiketi -->
-                            <div class="flex items-center gap-2 mt-1"><svg class="w-4 h-4 shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> <span id="detPeriod" class="font-medium text-slate-700 bg-slate-100 px-2 py-0.5 rounded text-xs">-</span></div>
+                        <div class="flex flex-wrap gap-4 text-xs md:text-sm text-slate-300">
+                            <div class="flex items-center gap-1.5"><svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> <span id="detEmail" class="truncate">-</span></div>
+                            <div class="flex items-center gap-1.5"><svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> <span id="detPhone">-</span></div>
+                            <div class="flex items-center gap-1.5 bg-slate-800/80 px-2.5 py-1 rounded-md border border-slate-600/50 shadow-inner backdrop-blur-sm"><svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> <span id="detDate" class="hidden"></span><span id="detPeriod" class="text-slate-200 font-medium">-</span></div>
                         </div>
                     </div>
                     
-                    <!-- YENİ: Adayın Cevaplarını Gör Butonu -->
-                    <div class="flex flex-col items-start lg:items-end w-full lg:w-auto mt-2 lg:mt-0">
-                        <button onclick="openAnswersModal()" class="w-full lg:w-auto bg-slate-800 hover:bg-slate-900 text-white px-5 py-3 rounded-xl text-sm font-semibold transition-all shadow-md flex items-center justify-center gap-2 hover:shadow-lg transform hover:-translate-y-0.5">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                            Soru Cevaplarını İncele
+                    <!-- Adayın Cevaplarını Gör Butonu -->
+                    <div class="relative z-10 flex flex-col items-start lg:items-end w-full lg:w-auto mt-2 lg:mt-0">
+                        <button onclick="openAnswersModal()" class="w-full lg:w-auto group bg-gradient-to-r from-white to-slate-50 hover:to-white text-slate-900 px-6 py-3.5 rounded-xl text-sm font-bold transition-all shadow-lg hover:shadow-hedef-500/20 flex items-center justify-center gap-2 transform hover:-translate-y-1 border border-transparent hover:border-slate-200">
+                            <svg class="w-5 h-5 text-hedef-600 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                            Soru Kitapçığını İncele
                         </button>
-                        <p class="text-[10px] text-slate-400 mt-2 text-center lg:text-right w-full">50 Soruluk Ham Veri Ekranı</p>
+                        <p class="text-[11px] text-slate-400 mt-2.5 text-center lg:text-right w-full flex items-center justify-center lg:justify-end gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+                            50 Soru ve Ham Veriler
+                        </p>
                     </div>
                 </div>
 
-                <!-- Sistem Değerlendirme Özeti -->
-                <div class="bg-blue-50/50 border border-blue-200 rounded-2xl p-5 md:p-6 shadow-sm">
-                    <div class="flex items-center gap-2.5 mb-3">
-                        <div class="bg-blue-100 p-1.5 rounded-lg">
-                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                        </div>
-                        <h3 class="text-sm font-bold text-blue-900 uppercase tracking-wider">Algoritma Değerlendirme Raporu</h3>
-                    </div>
-                    <div class="space-y-2">
-                        <p id="summaryMainText" class="text-sm md:text-[15px] text-blue-900 font-medium leading-relaxed"></p>
-                        <p id="summaryDimText" class="text-xs md:text-sm text-blue-700/80 leading-relaxed"></p>
-                    </div>
-                </div>
-
-                <!-- Risk Bildirimi Banner'ı -->
-                <div id="riskBanner" class="hidden bg-orange-50 border border-orange-200 p-4 rounded-xl flex items-start gap-3 text-orange-800">
-                    <svg class="w-5 h-5 md:w-6 md:h-6 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    <div>
-                        <h4 class="font-bold text-xs md:text-sm">Sistem Uyarısı: Riskli Profil Metrikleri</h4>
-                        <p id="riskText" class="text-xs md:text-sm mt-1">Adayın bazı yanıtlarında tutarsızlık veya sosyal beğenirlik eğilimi tespit edilmiştir.</p>
-                    </div>
-                </div>
-
-                <!-- Skor Kartları -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
-                    <div class="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm">
-                        <div class="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Genel Profil Skoru</div>
-                        <div class="flex items-end gap-1 md:gap-2">
-                            <span id="scoreGenel" class="text-3xl md:text-4xl font-black text-slate-800">0</span>
-                            <span class="text-slate-400 font-medium mb-1 text-xs md:text-sm">/ 100</span>
-                        </div>
-                        <div class="w-full bg-slate-100 h-1.5 md:h-2 rounded-full mt-3 md:mt-4 overflow-hidden">
-                            <div id="barGenel" class="h-full bg-slate-400 transition-all duration-1000 w-0"></div>
-                        </div>
-                    </div>
+                <!-- 2. SATIR: ÖZET VE SKORLAR GRID -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     
-                    <div class="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm">
-                        <div class="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex justify-between">
-                            Tutarsızlık Skoru <span class="text-slate-400 text-[9px] md:text-[10px]">(0-16)</span>
+                    <!-- Sistem Değerlendirme Özeti -->
+                    <div class="lg:col-span-2 bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm flex flex-col hover:shadow-md transition-all relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-bl-full -z-10"></div>
+                        <div class="flex items-center gap-3 mb-4 border-b border-slate-100 pb-4">
+                            <div class="bg-gradient-to-br from-indigo-50 to-blue-100 p-2.5 rounded-xl border border-indigo-100/50 shadow-sm">
+                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wide">Yapay Zeka Yorumu & Sentez</h3>
+                                <p class="text-[11px] text-slate-500 mt-0.5">Bu adayın yanıt patternine özel üretilmiş dinamik analiz.</p>
+                            </div>
                         </div>
-                        <div class="flex items-end gap-2">
-                            <span id="scoreTutarsizlik" class="text-3xl md:text-4xl font-black text-slate-800">0</span>
+                        <div class="space-y-4 flex-1 flex flex-col justify-center relative z-10">
+                            <p id="summaryMainText" class="text-[14px] text-slate-700 font-medium leading-relaxed italic border-l-4 border-indigo-400 pl-4 py-1"></p>
+                            <div class="bg-slate-50/80 rounded-xl p-4 border border-slate-100 mt-auto backdrop-blur-sm">
+                                <p id="summaryDimText" class="text-[13px] text-slate-600 leading-relaxed font-medium"></p>
+                            </div>
                         </div>
-                        <p id="textTutarsizlik" class="text-xs md:text-sm font-semibold mt-2 md:mt-3">-</p>
                     </div>
 
-                    <div class="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm">
-                        <div class="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex justify-between">
-                            Sosyal Beğenirlik <span class="text-slate-400 text-[9px] md:text-[10px]">(3-15)</span>
+                    <!-- Genel Uyum Skoru Kartı -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col items-center justify-center relative overflow-hidden group">
+                        <div class="absolute top-0 w-full h-1.5 bg-gradient-to-r from-slate-200 via-hedef-500 to-slate-200 opacity-50"></div>
+                        <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-5">Genel Profil Skoru</h3>
+                        
+                        <!-- Circular Progress Grafiği -->
+                        <div class="relative w-36 h-36 flex items-center justify-center mb-2">
+                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                <path class="text-slate-100" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <path id="circleGenel" class="text-hedef-500 transition-all duration-1000 ease-out" stroke-dasharray="0, 100" stroke-width="3" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            </svg>
+                            <div class="absolute flex flex-col items-center justify-center">
+                                <span id="scoreGenel" class="text-4xl font-black text-slate-800 tracking-tighter">0</span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase mt-1">/ 100</span>
+                            </div>
                         </div>
-                        <div class="flex items-end gap-2">
-                            <span id="scoreFakeGood" class="text-3xl md:text-4xl font-black text-slate-800">0</span>
-                        </div>
-                        <p id="textFakeGood" class="text-xs md:text-sm font-semibold mt-2 md:mt-3">-</p>
                     </div>
                 </div>
 
-                <!-- Alt Bölüm: Radar & Boyutlar -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-                    <div class="bg-white border border-slate-200 rounded-xl p-4 md:p-6 shadow-sm flex flex-col min-h-[300px]">
-                        <h3 class="text-xs md:text-sm font-bold text-slate-700 uppercase tracking-wider mb-2 md:mb-4">Kişilik Boyutları Dağılımı</h3>
+                <!-- 3. SATIR: RİSK METRİKLERİ -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Tutarsızlık -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex items-center justify-between group hover:border-slate-300 transition-colors">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Tutarsızlık Skoru</h3>
+                                <span class="text-slate-400 text-[9px] font-bold bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">MAKS: 16</span>
+                            </div>
+                            <p id="textTutarsizlik" class="text-sm font-bold mt-1">-</p>
+                        </div>
+                        <div id="boxTutarsizlik" class="w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform">
+                            <span id="scoreTutarsizlik" class="text-xl font-black">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Sosyal Beğenirlik -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex items-center justify-between group hover:border-slate-300 transition-colors">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Sosyal Beğenirlik</h3>
+                                <span class="text-slate-400 text-[9px] font-bold bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">MAKS: 15</span>
+                            </div>
+                            <p id="textFakeGood" class="text-sm font-bold mt-1">-</p>
+                        </div>
+                        <div id="boxFakeGood" class="w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform">
+                            <span id="scoreFakeGood" class="text-xl font-black">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk Banner (Yalnızca Kritik Risk Varsa Görünür) -->
+                <div id="riskBanner" class="hidden flex bg-rose-50 border-l-4 border-rose-500 p-4 rounded-r-xl items-start gap-3 shadow-sm">
+                    <svg class="w-6 h-6 shrink-0 mt-0.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    <div>
+                        <h4 class="font-bold text-sm text-rose-900">Sistem Uyarısı: Riskli Metrikler Tespit Edildi</h4>
+                        <p id="riskText" class="text-[13px] text-rose-700 mt-1 font-medium"></p>
+                    </div>
+                </div>
+
+                <!-- 4. SATIR: GRAFİKLER -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Radar Grafik -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col min-h-[350px]">
+                        <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-4 text-center">Kişilik Boyutları Dağılımı</h3>
                         <div class="flex-1 relative w-full h-full">
                             <canvas id="radarChart"></canvas>
                         </div>
                     </div>
-                    <div class="bg-white border border-slate-200 rounded-xl p-4 md:p-6 shadow-sm flex flex-col">
-                        <h3 class="text-xs md:text-sm font-bold text-slate-700 uppercase tracking-wider mb-3 md:mb-4">Detaylı Boyut Puanları</h3>
-                        <div id="dimensionsList" class="space-y-3 md:space-y-4 flex-1 overflow-y-auto pr-1 md:pr-2">
+                    <!-- Boyut Barları -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col">
+                        <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-5">Detaylı Boyut Puanları</h3>
+                        <div id="dimensionsList" class="space-y-4 flex-1 overflow-y-auto pr-2 hide-scroll">
                             <!-- Boyut çubukları JS ile gelecek -->
                         </div>
                     </div>
@@ -259,9 +295,17 @@
             </div>
             
             <!-- Modal İçerik (Sorular Grid) -->
-            <div class="p-5 md:p-6 overflow-y-auto flex-1 bg-slate-100/50">
-                <div id="answersGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                   <!-- JavaScript ile 50 soru kutucuğu buraya dolacak -->
+            <div class="p-5 md:p-6 overflow-y-auto flex-1 bg-slate-100/50 relative">
+                <div id="answersGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-4 transition-all duration-300">
+                   <!-- JavaScript ile pagination kontrollü sorular buraya dolacak -->
+                </div>
+            </div>
+            
+            <!-- YENİ: Pagination Kontrolleri -->
+            <div class="px-5 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between shrink-0">
+                <span class="text-xs font-medium text-slate-500" id="paginationInfo">Sayfa 1 / 5</span>
+                <div class="flex items-center gap-1" id="paginationControls">
+                    <!-- JS ile dinamik butonlar dolacak -->
                 </div>
             </div>
             
@@ -530,21 +574,17 @@
                 let rawAnswersForMetrics = {};
                 let totalScoreSum = 0;
 
-                // Adayın Dönemini (Ay/Yıl) Belirleme
-                // Web App "SheetName" gönderiyorsa onu kullan, yoksa Tarihten hesapla.
                 let period = row["SheetName"] || getPeriodFromDate(row["Tarih"]);
                 tempPeriods.add(period);
 
-                // Cevapları alma ve ters puanlama
                 for(let i=1; i<=50; i++) {
-                    // Veri "q1" veya "Soru 1" anahtarıyla gelebilir
                     let valRaw = row[`q${i}`];
                     if (valRaw === undefined) valRaw = row[`Soru ${i}`];
                     
                     let val = Number(valRaw);
                     if (isNaN(val) || val < 1 || val > 5) val = 3; 
                     
-                    rawAnswersForMetrics[i] = val; // Ham cevapları kaydet
+                    rawAnswersForMetrics[i] = val; 
                     
                     if (REVERSE_QUESTIONS.includes(i)) {
                         processedAnswers[i] = 6 - val;
@@ -554,7 +594,6 @@
                     totalScoreSum += processedAnswers[i];
                 }
 
-                // Boyut Skoru Hesaplama
                 let dimScores = {};
                 for(let dim in DIMENSIONS) {
                     let questions = DIMENSIONS[dim];
@@ -564,10 +603,8 @@
                     dimScores[dim] = Math.round((sum / maxVal) * 100);
                 }
 
-                // Genel Skor, Fake Good, Tutarsızlık
                 let genelSkor = Math.round((totalScoreSum / 250) * 100);
                 let fakeGoodSum = rawAnswersForMetrics[37] + rawAnswersForMetrics[39] + rawAnswersForMetrics[41];
-                let fakeGoodAvg = fakeGoodSum / 3;
 
                 let tutarsizlik = 
                     Math.abs(rawAnswersForMetrics[43] - rawAnswersForMetrics[44]) +
@@ -575,25 +612,56 @@
                     Math.abs(rawAnswersForMetrics[47] - rawAnswersForMetrics[48]) +
                     Math.abs(rawAnswersForMetrics[49] - rawAnswersForMetrics[50]);
 
-                // Karar Kuralları
-                let badge = { text: "Bilinmiyor", style: "bg-slate-100 text-slate-700" };
-                if (genelSkor < 50) { badge = { text: "Elenebilir", style: "bg-red-100 text-red-700 border-red-200" }; } 
-                else if (tutarsizlik > 6 || fakeGoodAvg > 4) { badge = { text: "Dikkatli İncelenmeli", style: "bg-orange-100 text-orange-700 border-orange-200" }; } 
-                else if (genelSkor > 75 && tutarsizlik < 4 && fakeGoodAvg < 3) { badge = { text: "Güçlü Aday", style: "bg-emerald-100 text-emerald-700 border-emerald-200" }; } 
-                else if (genelSkor >= 60 && genelSkor <= 75 && tutarsizlik < 6) { badge = { text: "Mülakat Önerilir", style: "bg-blue-100 text-blue-700 border-blue-200" }; } 
-                else { badge = { text: "Ortalama Profil", style: "bg-slate-100 text-slate-700 border-slate-300" }; }
-
-                // Özet Metinler
-                let summaryMainText = "";
-                if (badge.text === "Elenebilir") summaryMainText = "Adayın envanter skorları ve yetkinlik uyumu kurum standartlarımızın altındadır. Bu aşamada işe alım sürecine devam edilmesi tavsiye edilmez.";
-                else if (badge.text === "Dikkatli İncelenmeli") summaryMainText = "Profilde yüksek tutarsızlık veya sosyal beğenirlik (manipülasyon) riski tespit edilmiştir. Aday testi yanıltıcı doldurmuş olabilir. Mülakata alınacaksa çapraz sorularla detaylı analiz yapılmalıdır.";
-                else if (badge.text === "Güçlü Aday") summaryMainText = "Adayın envanter sonuçları yüksek potansiyele işaret etmektedir. Çelişki barındırmayan, dürüst ve pozitif bir profil çizmektedir. Öncelikli olarak mülakata alınması şiddetle önerilir.";
-                else if (badge.text === "Mülakat Önerilir") summaryMainText = "Aday temel beklentileri karşılayan, sağlıklı ve tutarlı bir profil çizmektedir. Herhangi bir manipülasyon veya çelişki riski görülmemiştir. Bir sonraki aşama olan yetkinlik mülakatına davet edilebilir.";
-                else summaryMainText = "Aday asgari standartları karşılamaktadır ancak belirgin bir üstünlüğü bulunmamaktadır. Açık pozisyonun aciliyetine ve ihtiyaca göre alternatif adaylar arasında değerlendirilebilir.";
-
                 let highestDim = Object.keys(dimScores).reduce((a, b) => dimScores[a] > dimScores[b] ? a : b);
                 let lowestDim = Object.keys(dimScores).reduce((a, b) => dimScores[a] < dimScores[b] ? a : b);
-                let summaryDimText = `En güçlü olduğu yetkinlik <strong>${highestDim} (%${dimScores[highestDim]})</strong>, eğitim ve geribildirimle en çok desteklenmesi gereken alanı ise <strong>${lowestDim} (%${dimScores[lowestDim]})</strong> olarak ölçülmüştür.`;
+
+                // YENİ KARAR KURALLARI (Gerçekçi ve Esnek Sınırlar)
+                let badge = {};
+                if (tutarsizlik > 7) {
+                    badge = { text: "Çelişkili Profil", style: "bg-orange-500/20 text-orange-200 border-orange-500/30" };
+                } else if (fakeGoodSum > 12) {
+                    badge = { text: "Manipülasyon Riski", style: "bg-rose-500/20 text-rose-200 border-rose-500/30" };
+                } else if (genelSkor >= 75) {
+                    badge = { text: "Güçlü Aday", style: "bg-emerald-500/20 text-emerald-200 border-emerald-500/30" };
+                } else if (genelSkor >= 60) {
+                    badge = { text: "Mülakata Uygun", style: "bg-blue-500/20 text-blue-200 border-blue-500/30" };
+                } else {
+                    badge = { text: "Gelişim Bekleyen", style: "bg-slate-500/20 text-slate-200 border-slate-500/30" };
+                }
+
+                // YENİ: DİNAMİK YAPAY ZEKA SENTEZİ
+                let aiSentences = [];
+                let nameStr = row["Ad Soyad"].split(' ')[0]; // Sadece ilk ismi al, daha samimi bir rapor dili için
+                if(!nameStr || nameStr.toLowerCase() === "isimsiz") nameStr = "Aday";
+
+                // 1. Genel Giriş Cümlesi
+                if (genelSkor >= 80) aiSentences.push(`${nameStr}, kurum kültürümüze ve pozisyonun yetkinlik gerekliliklerine <strong>mükemmel bir uyum potansiyeli</strong> sergiliyor.`);
+                else if (genelSkor >= 65) aiSentences.push(`${nameStr}, genel hatlarıyla pozitif bir profil çizmekte olup, temel yetkinliklerde yeterli seviyede görünmektedir.`);
+                else if (genelSkor >= 50) aiSentences.push(`${nameStr} adlı adayın genel yetkinlik skoru ortalama düzeyde seyretmektedir.`);
+                else aiSentences.push(`${nameStr} adlı adayın genel yetkinlik skoru maalesef kurum beklentilerimizin oldukça altında kalmıştır.`);
+
+                // 2. Risk ve Güvenilirlik Durumu
+                if (tutarsizlik > 7 && fakeGoodSum > 12) {
+                    aiSentences.push(`Ancak profil güvenilirliğinde ciddi sorunlar mevcut. Hem yanıtlar arası çelişkiler çok yüksek, hem de adayın kendisini kusursuz gösterme çabası (manipülasyon riski) kritik seviyede.`);
+                } else if (tutarsizlik > 7) {
+                    aiSentences.push(`Dikkat çeken en büyük unsur, benzer sorulara verilen <strong>yanıtlardaki yüksek tutarsızlıktır</strong>. Kararlılık gerektiren konularda adayın mülakatta zorlanması muhtemeldir.`);
+                } else if (fakeGoodSum > 12) {
+                    aiSentences.push(`Bunun yanında, adayın "Sosyal Beğenirlik" (idealize edilmiş profil çizme çabası) skoru çok yüksektir. Envanter sonuçlarının gerçek davranış eğiliminden çok, "istenilen cevapları verme" motivasyonuyla şekillendiği gözlemlenmiştir.`);
+                } else if (tutarsizlik <= 4 && fakeGoodSum <= 10) {
+                    aiSentences.push(`Cevap paternleri incelendiğinde son derece <strong>doğal, dürüst ve tutarlı</strong> bir veri seti elde edilmiştir.`);
+                }
+
+                // 3. Sonuç Önerisi
+                if (badge.text === "Güçlü Aday" || badge.text === "Mülakata Uygun") {
+                    aiSentences.push(`Sonuç olarak, risk barındırmayan bu profilin işe alım sürecinde yetkinlik bazlı mülakatla detaylandırılması kesinlikle tavsiye edilir.`);
+                } else if (badge.text === "Gelişim Bekleyen") {
+                    aiSentences.push(`Adayın ekibe katılması halinde adaptasyon süreci için ekstra oryantasyon ve yönderlik (mentoring) gerekebilir.`);
+                } else {
+                    aiSentences.push(`Test sonuçlarının güvenilirliği düşük olduğundan, kararın referans kontrolü ve vaka analizi ile teyit edilmesi şarttır.`);
+                }
+
+                let summaryMainText = aiSentences.join(" ");
+                let summaryDimText = `<strong>Güçlü Yön:</strong> Analizler sonucunda adayın en belirgin yetkinliğinin <strong>${highestDim} (%${dimScores[highestDim]})</strong> olduğu, <br/><strong>Gelişim Alanı:</strong> Ekip içi uyum ve performansta en çok desteklenmesi gereken (en düşük skorlu) alanının ise <strong>${lowestDim} (%${dimScores[lowestDim]})</strong> olduğu tespit edilmiştir.`;
 
                 return {
                     id: index,
@@ -603,19 +671,19 @@
                         email: row["E-posta"] || "-",
                         phone: row["Telefon"] || "-",
                         date: row["Tarih"] || "-",
-                        period: period // Adayın dönemi
+                        period: period 
                     },
                     metrics: {
                         genelSkor, tutarsizlik, fakeGoodSum, dimScores, badge, summaryMainText, summaryDimText,
-                        rawAnswers: rawAnswersForMetrics, // Modal için ham cevaplar
-                        processedAnswers: processedAnswers // Modal renklendirmesi için işlenmiş cevaplar
+                        rawAnswers: rawAnswersForMetrics, 
+                        processedAnswers: processedAnswers 
                     }
                 };
             });
 
-            allCandidates.reverse(); // En yeniyi üste al
-            updatePeriodDropdown(tempPeriods); // Dönem filtresini güncelle
-            filterList(); // Listeyi render et (Filtreyi de uygulayarak)
+            allCandidates.reverse(); 
+            updatePeriodDropdown(tempPeriods); 
+            filterList(); 
 
             if (selectedCandidateId !== null) {
                 const stillExists = allCandidates.find(c => c.id === selectedCandidateId);
@@ -719,54 +787,91 @@
             document.getElementById('detEmail').innerText = candidate.info.email;
             document.getElementById('detPhone').innerText = candidate.info.phone;
             
-            // Tarih ve YENİ: Dönem Gösterimi
+            // Tarih ve Dönem
             let displayDate = candidate.info.date;
-            if (displayDate.startsWith('Date')) displayDate = "Tarih Formatı Dönüştürülüyor..."; // GViz formatlı geldiyse
+            if (displayDate.startsWith('Date')) displayDate = "Tarih Dönüştürülüyor...";
             document.getElementById('detDate').innerText = displayDate;
             document.getElementById('detPeriod').innerText = candidate.info.period;
 
+            // Rozet (Badge)
             const badgeEl = document.getElementById('detBadge');
             badgeEl.innerText = candidate.metrics.badge.text;
-            badgeEl.className = `px-2 md:px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-full border ${candidate.metrics.badge.style} shrink-0`;
+            badgeEl.className = `px-3 py-1 text-[11px] font-bold uppercase tracking-wider rounded-md border shrink-0 shadow-sm ${candidate.metrics.badge.style}`;
 
-            document.getElementById('summaryMainText').innerText = candidate.metrics.summaryMainText;
+            // Yapay Zeka Özeti
+            document.getElementById('summaryMainText').innerHTML = candidate.metrics.summaryMainText;
             document.getElementById('summaryDimText').innerHTML = candidate.metrics.summaryDimText;
 
+            // Genel Skor (Dairesel Grafik)
             document.getElementById('scoreGenel').innerText = candidate.metrics.genelSkor;
-            const barGenel = document.getElementById('barGenel');
-            barGenel.style.width = candidate.metrics.genelSkor + '%';
-            barGenel.className = `h-full transition-all duration-1000 ${candidate.metrics.genelSkor > 75 ? 'bg-emerald-500' : (candidate.metrics.genelSkor >= 60 ? 'bg-blue-500' : 'bg-red-500')}`;
+            const circleGenel = document.getElementById('circleGenel');
+            if (circleGenel) {
+                circleGenel.setAttribute('stroke-dasharray', `${candidate.metrics.genelSkor}, 100`);
+                if (candidate.metrics.genelSkor >= 75) circleGenel.className.baseVal = "text-emerald-500 transition-all duration-1000 ease-out";
+                else if (candidate.metrics.genelSkor >= 60) circleGenel.className.baseVal = "text-blue-500 transition-all duration-1000 ease-out";
+                else circleGenel.className.baseVal = "text-slate-400 transition-all duration-1000 ease-out";
+            }
 
+            // Tutarsızlık Skoru
             const tScore = candidate.metrics.tutarsizlik;
             document.getElementById('scoreTutarsizlik').innerText = tScore;
             const tText = document.getElementById('textTutarsizlik');
-            if (tScore > 6) { tText.innerText = "Yüksek Çelişki Riski"; tText.className = "text-xs md:text-sm font-semibold mt-2 md:mt-3 text-red-600"; }
-            else if (tScore >= 4) { tText.innerText = "Hafif Tutarsızlık"; tText.className = "text-xs md:text-sm font-semibold mt-2 md:mt-3 text-orange-500"; }
-            else { tText.innerText = "Tutarlı Profil"; tText.className = "text-xs md:text-sm font-semibold mt-2 md:mt-3 text-emerald-600"; }
+            const boxTut = document.getElementById('boxTutarsizlik');
+            const scoreTutEl = document.getElementById('scoreTutarsizlik');
+            
+            if (tScore > 7) { 
+                tText.innerText = "Yüksek Çelişki Riski"; tText.className = "text-sm font-bold mt-1 text-orange-600"; 
+                boxTut.className = "w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform bg-orange-50 border-orange-200";
+                scoreTutEl.className = "text-xl font-black text-orange-700";
+            } else if (tScore >= 5) { 
+                tText.innerText = "Kabul Edilebilir Sapma"; tText.className = "text-sm font-bold mt-1 text-slate-600"; 
+                boxTut.className = "w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform bg-slate-50 border-slate-200";
+                scoreTutEl.className = "text-xl font-black text-slate-700";
+            } else { 
+                tText.innerText = "Çok Tutarlı Profil"; tText.className = "text-sm font-bold mt-1 text-emerald-600"; 
+                boxTut.className = "w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform bg-emerald-50 border-emerald-200";
+                scoreTutEl.className = "text-xl font-black text-emerald-700";
+            }
 
+            // Sosyal Beğenirlik Skoru
             const fgScore = candidate.metrics.fakeGoodSum;
             document.getElementById('scoreFakeGood').innerText = fgScore;
             const fgText = document.getElementById('textFakeGood');
-            if (fgScore >= 13) { fgText.innerText = "Kritik Manipülasyon Riski"; fgText.className = "text-xs md:text-sm font-semibold mt-2 md:mt-3 text-red-600"; }
-            else if (fgScore >= 10) { fgText.innerText = "Kusursuz Gösterme Eğilimi"; fgText.className = "text-xs md:text-sm font-semibold mt-2 md:mt-3 text-orange-500"; }
-            else { fgText.innerText = "Doğal ve Objektif"; fgText.className = "text-xs md:text-sm font-semibold mt-2 md:mt-3 text-emerald-600"; }
+            const boxFg = document.getElementById('boxFakeGood');
+            const scoreFgEl = document.getElementById('scoreFakeGood');
 
+            if (fgScore > 12) { 
+                fgText.innerText = "Yüksek Manipülasyon"; fgText.className = "text-sm font-bold mt-1 text-rose-600"; 
+                boxFg.className = "w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform bg-rose-50 border-rose-200";
+                scoreFgEl.className = "text-xl font-black text-rose-700";
+            } else if (fgScore >= 10) { 
+                fgText.innerText = "Hafif Eğilim"; fgText.className = "text-sm font-bold mt-1 text-slate-600"; 
+                boxFg.className = "w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform bg-slate-50 border-slate-200";
+                scoreFgEl.className = "text-xl font-black text-slate-700";
+            } else { 
+                fgText.innerText = "Doğal ve Objektif"; fgText.className = "text-sm font-bold mt-1 text-emerald-600"; 
+                boxFg.className = "w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform bg-emerald-50 border-emerald-200";
+                scoreFgEl.className = "text-xl font-black text-emerald-700";
+            }
+
+            // Risk Banner Gösterimi
             const riskBanner = document.getElementById('riskBanner');
-            if (tScore > 6 || fgScore >= 13) {
+            if (tScore > 7 || fgScore > 12) {
                 riskBanner.classList.remove('hidden');
-                document.getElementById('riskText').innerText = `${fgScore >= 13 ? 'Sosyal Beğenirlik (Manipülasyon) puanı çok yüksek. ' : ''}${tScore > 6 ? 'Cevaplar arası tutarsızlık tespit edildi.' : ''}`;
+                document.getElementById('riskText').innerText = `${fgScore > 12 ? 'Sosyal Beğenirlik (Manipülasyon) puanı çok yüksek. ' : ''}${tScore > 7 ? 'Cevaplar arası yüksek tutarsızlık tespit edildi.' : ''}`;
             } else riskBanner.classList.add('hidden');
 
+            // Boyut Puanları Barları
             const dimList = document.getElementById('dimensionsList');
             dimList.innerHTML = "";
             for (let dim in candidate.metrics.dimScores) {
                 const val = candidate.metrics.dimScores[dim];
                 dimList.innerHTML += `
                     <div>
-                        <div class="flex justify-between text-[11px] md:text-xs font-bold text-slate-600 mb-1">
+                        <div class="flex justify-between text-[11px] font-bold text-slate-600 mb-1.5">
                             <span>${dim}</span><span class="text-hedef-600">%${val}</span>
                         </div>
-                        <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
                             <div class="h-full bg-hedef-500 rounded-full" style="width: ${val}%"></div>
                         </div>
                     </div>
@@ -776,68 +881,124 @@
             drawRadar(candidate.metrics.dimScores);
         }
 
-        /** YENİ: DETAYLI CEVAPLAR MODALI FONKSİYONLARI */
+        /** YENİ: DETAYLI CEVAPLAR MODALI VE PAGINATION FONKSİYONLARI */
+        const ITEMS_PER_PAGE = 10;
+        let currentModalPage = 1;
+
         function openAnswersModal() {
             if (selectedCandidateId === null) return;
             const candidate = allCandidates.find(c => c.id === selectedCandidateId);
             if (!candidate) return;
 
-            // İsim güncelleme
             document.getElementById('modalCandidateName').innerText = `${candidate.info.name} - ${candidate.info.position}`;
-
-            const grid = document.getElementById('answersGrid');
-            grid.innerHTML = "";
-
-            // 50 soruyu dön ve kutucukları oluştur
-            for(let i=1; i<=50; i++) {
-                const rawAns = candidate.metrics.rawAnswers[i];
-                const procAns = candidate.metrics.processedAnswers[i];
-                
-                // Renk belirleme (İşlenmiş skora göre gerçek etkiyi yansıtırız)
-                let bgColor = "bg-slate-50", textColor = "text-slate-700", borderColor = "border-slate-200";
-                
-                if (procAns >= 4) {
-                    bgColor = "bg-emerald-50/50"; textColor = "text-emerald-700"; borderColor = "border-emerald-200";
-                } else if (procAns <= 2) {
-                    bgColor = "bg-rose-50/50"; textColor = "text-rose-700"; borderColor = "border-rose-200";
-                } else {
-                    bgColor = "bg-amber-50/50"; textColor = "text-amber-700"; borderColor = "border-amber-200";
-                }
-
-                // Ters sorularda uyarı ikonu (Tersten puanlandığını İK'ya belli etmek için)
-                const isReverse = REVERSE_QUESTIONS.includes(i);
-                const reverseIcon = isReverse ? `<div class="flex items-center gap-1 text-[10px] text-slate-400 bg-white px-2 py-1 rounded-md border border-slate-200 shadow-sm"><svg class="w-3 h-3" title="Ters Puanlanan Soru" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg> Ters Soru</div>` : '';
-
-                const questionText = QUESTIONS[i - 1] || `Soru metni bulunamadı.`;
-                const answerText = ANSWER_LABELS[rawAns] || `Bilinmeyen Cevap`;
-
-                const box = document.createElement('div');
-                box.className = `relative flex flex-col p-4 md:p-5 rounded-2xl border ${bgColor} ${borderColor} shadow-sm transition-all hover:shadow-md`;
-                box.innerHTML = `
-                    <div class="flex justify-between items-start mb-3 gap-2">
-                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0 bg-white px-2 py-1 rounded border border-slate-200">Soru ${i}</span>
-                        ${reverseIcon}
-                    </div>
-                    <p class="text-sm md:text-[15px] font-medium text-slate-800 mb-4 flex-1 leading-relaxed">${questionText}</p>
-                    <div class="inline-flex items-center gap-2 w-max px-3 py-1.5 rounded-lg bg-white border ${borderColor} shadow-sm">
-                        <div class="flex items-center justify-center w-6 h-6 rounded-md ${procAns >= 4 ? 'bg-emerald-100 text-emerald-700' : (procAns <= 2 ? 'bg-rose-100 text-rose-700' : 'bg-amber-100 text-amber-700')} font-bold text-sm shrink-0">
-                            ${rawAns}
-                        </div>
-                        <span class="text-xs md:text-sm font-bold ${textColor}">${answerText}</span>
-                    </div>
-                `;
-                grid.appendChild(box);
-            }
+            
+            // Modalı her açtığımızda 1. sayfadan başlat
+            currentModalPage = 1;
+            renderAnswersPage(1);
 
             const modal = document.getElementById('answersModal');
             const content = document.getElementById('answersModalContent');
             
             modal.classList.remove('hidden');
-            // Animasyon trigerlamak için kısa gecikme
             setTimeout(() => {
                 content.classList.remove('modal-enter');
                 content.classList.add('modal-enter-active');
             }, 10);
+        }
+
+        function renderAnswersPage(page) {
+            const candidate = allCandidates.find(c => c.id === selectedCandidateId);
+            if (!candidate) return;
+
+            const grid = document.getElementById('answersGrid');
+            
+            // Geçiş Animasyonu Başlat (Opaklık düşür)
+            grid.classList.remove('page-fade-enter-active');
+            grid.classList.add('page-fade-enter');
+            
+            setTimeout(() => {
+                grid.innerHTML = "";
+                
+                // Sayfalandırma Sınırları
+                const startIndex = (page - 1) * ITEMS_PER_PAGE + 1;
+                const endIndex = Math.min(page * ITEMS_PER_PAGE, 50);
+
+                for(let i = startIndex; i <= endIndex; i++) {
+                    const rawAns = candidate.metrics.rawAnswers[i];
+                    const procAns = candidate.metrics.processedAnswers[i];
+                    
+                    let bgColor = "bg-slate-50", textColor = "text-slate-700", borderColor = "border-slate-200";
+                    
+                    if (procAns >= 4) {
+                        bgColor = "bg-emerald-50/50"; textColor = "text-emerald-700"; borderColor = "border-emerald-200";
+                    } else if (procAns <= 2) {
+                        bgColor = "bg-rose-50/50"; textColor = "text-rose-700"; borderColor = "border-rose-200";
+                    } else {
+                        bgColor = "bg-amber-50/50"; textColor = "text-amber-700"; borderColor = "border-amber-200";
+                    }
+
+                    const isReverse = REVERSE_QUESTIONS.includes(i);
+                    const reverseIcon = isReverse ? `<div class="flex items-center gap-1 text-[10px] text-slate-400 bg-white px-2 py-1 rounded-md border border-slate-200 shadow-sm"><svg class="w-3 h-3" title="Ters Puanlanan Soru" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg> Ters Soru</div>` : '';
+
+                    const questionText = QUESTIONS[i - 1] || `Soru metni bulunamadı.`;
+                    const answerText = ANSWER_LABELS[rawAns] || `Bilinmeyen Cevap`;
+
+                    const box = document.createElement('div');
+                    box.className = `relative flex flex-col p-4 md:p-5 rounded-2xl border ${bgColor} ${borderColor} shadow-sm transition-all hover:shadow-md bg-white`;
+                    box.innerHTML = `
+                        <div class="flex justify-between items-start mb-3 gap-2">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">Soru ${i}</span>
+                            ${reverseIcon}
+                        </div>
+                        <p class="text-sm md:text-[15px] font-medium text-slate-800 mb-4 flex-1 leading-relaxed">${questionText}</p>
+                        <div class="inline-flex items-center gap-2 w-max px-3 py-2 rounded-xl bg-white border ${borderColor} shadow-sm">
+                            <div class="flex items-center justify-center w-7 h-7 rounded-lg ${procAns >= 4 ? 'bg-emerald-100 text-emerald-700' : (procAns <= 2 ? 'bg-rose-100 text-rose-700' : 'bg-amber-100 text-amber-700')} font-bold text-sm shrink-0 shadow-inner">
+                                ${rawAns}
+                            </div>
+                            <span class="text-xs md:text-sm font-bold ${textColor}">${answerText}</span>
+                        </div>
+                    `;
+                    grid.appendChild(box);
+                }
+
+                // Sayfa Numarasını Güncelle ve UI Çiz
+                document.getElementById('paginationInfo').innerText = `Sayfa ${page} / 5`;
+                renderPaginationUI(page);
+                
+                // Animasyonla tekrar görünür yap
+                grid.classList.remove('page-fade-enter');
+                grid.classList.add('page-fade-enter-active');
+            }, 150); // fade out süresi kadar bekle
+        }
+
+        function renderPaginationUI(currentPage) {
+            const container = document.getElementById('paginationControls');
+            let html = '';
+            
+            // Önceki Butonu
+            html += `<button onclick="changePage(-1)" ${currentPage === 1 ? 'disabled class="p-1.5 rounded-lg text-slate-300 cursor-not-allowed"' : 'class="p-1.5 rounded-lg text-slate-600 hover:bg-slate-200 transition-colors"'}><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>`;
+            
+            // Sayfa Numaraları
+            for(let i=1; i<=5; i++) {
+                if (i === currentPage) {
+                    html += `<button class="w-8 h-8 rounded-lg bg-hedef-600 text-white font-bold text-sm shadow-sm flex items-center justify-center transform scale-105 transition-transform">${i}</button>`;
+                } else {
+                    html += `<button onclick="renderAnswersPage(${i})" class="w-8 h-8 rounded-lg bg-transparent text-slate-600 font-medium text-sm hover:bg-slate-200 transition-colors flex items-center justify-center">${i}</button>`;
+                }
+            }
+            
+            // Sonraki Butonu
+            html += `<button onclick="changePage(1)" ${currentPage === 5 ? 'disabled class="p-1.5 rounded-lg text-slate-300 cursor-not-allowed"' : 'class="p-1.5 rounded-lg text-slate-600 hover:bg-slate-200 transition-colors"'}><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>`;
+            
+            container.innerHTML = html;
+        }
+
+        function changePage(delta) {
+            const newPage = currentModalPage + delta;
+            if (newPage >= 1 && newPage <= 5) {
+                currentModalPage = newPage;
+                renderAnswersPage(newPage);
+            }
         }
 
         function closeAnswersModal() {
