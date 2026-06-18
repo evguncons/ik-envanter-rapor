@@ -2,14 +2,14 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hedef AVM - Kişilik Envanteri Paneli</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -23,6 +23,7 @@
                             500: '#db2777',
                             600: '#c2185b', // Hedef AVM Magentası
                             700: '#ad1457', // Hover
+                            900: '#831843'
                         }
                     }
                 }
@@ -52,225 +53,243 @@
 
     <!-- Giriş Ekranı (Login Screen) -->
     <div id="loginScreen" class="fixed inset-0 bg-slate-50 z-50 flex items-center justify-center p-4 transition-opacity duration-500">
-        <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-8 max-w-md w-full text-center">
-            <div class="w-16 h-16 bg-hedef-600 rounded-xl flex items-center justify-center text-white font-bold text-3xl mx-auto shadow-md mb-6">H</div>
-            <h2 class="text-2xl font-bold text-slate-900 mb-2">HEDEF AVM</h2>
-            <p class="text-slate-500 text-sm mb-6">İK Değerlendirme Paneli'ne erişmek için yetkilendirme şifrenizi giriniz.</p>
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 md:p-8 max-w-md w-full text-center">
+            <div class="w-16 h-16 md:w-20 md:h-20 bg-hedef-600 rounded-xl flex items-center justify-center text-white font-bold text-3xl md:text-4xl mx-auto shadow-md mb-6">H</div>
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2">HEDEF AVM</h2>
+            <p class="text-slate-500 text-sm md:text-base mb-8">İK Değerlendirme Paneli'ne erişmek için yetkilendirme şifrenizi giriniz.</p>
             
             <div class="space-y-4">
                 <div>
-                    <input type="password" id="passwordInput" placeholder="Şifre" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hedef-600 focus:border-transparent transition-all text-center tracking-widest" onkeypress="if(event.key === 'Enter') handleLogin()">
+                    <input type="password" id="passwordInput" placeholder="Şifre" class="w-full px-5 py-3.5 md:py-4 bg-slate-50 border border-slate-300 rounded-lg text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-hedef-600 focus:border-transparent transition-all text-center tracking-widest" onkeypress="if(event.key === 'Enter') handleLogin()">
                 </div>
-                <button onclick="handleLogin()" class="w-full bg-hedef-600 hover:bg-hedef-700 text-white font-bold py-3 px-4 rounded-lg transition-colors shadow-sm">Giriş Yap</button>
+                <button onclick="handleLogin()" class="w-full bg-hedef-600 hover:bg-hedef-700 text-white font-bold py-3.5 md:py-4 px-4 rounded-lg text-base md:text-lg transition-colors shadow-sm">Giriş Yap</button>
                 <p id="loginError" class="text-red-500 text-sm hidden mt-2 font-medium">Hatalı şifre girdiniz, lütfen tekrar deneyin.</p>
             </div>
-            <div class="mt-6 border-t border-slate-100 pt-4">
-                <p class="text-xs text-slate-400">&copy; 2026 Hedef AVM Mağazacılık A.Ş.</p>
+            <div class="mt-8 border-t border-slate-100 pt-4">
+                <p class="text-xs md:text-sm text-slate-400">&copy; 2026 Hedef AVM Mağazacılık A.Ş.</p>
             </div>
         </div>
     </div>
 
     <!-- Üst Bar -->
-    <header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-6 shrink-0 shadow-sm z-10">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-hedef-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-md">H</div>
+    <header class="bg-white border-b border-slate-200 h-16 md:h-20 flex items-center justify-between px-4 md:px-6 shrink-0 shadow-sm z-10">
+        <div class="flex items-center gap-3 md:gap-4">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-hedef-600 rounded-lg flex items-center justify-center text-white font-bold text-xl md:text-2xl shadow-md shrink-0">H</div>
             <div>
-                <h1 class="font-bold text-slate-900 leading-tight">HEDEF AVM</h1>
-                <p class="text-xs text-slate-500 font-medium">İK Değerlendirme Paneli</p>
+                <h1 class="font-black text-slate-900 text-lg md:text-xl leading-tight">HEDEF AVM</h1>
+                <p class="text-[10px] md:text-sm text-slate-500 font-semibold truncate">İK Değerlendirme Paneli</p>
             </div>
         </div>
         <div>
-            <button onclick="fetchData()" id="btnSync" class="flex items-center gap-2 bg-hedef-600 hover:bg-hedef-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.253 8H18"></path></svg>
+            <button onclick="fetchData()" id="btnSync" class="flex items-center gap-2 bg-hedef-600 hover:bg-hedef-700 text-white px-3 py-2 md:px-5 md:py-2.5 rounded-lg text-sm md:text-base font-bold transition-colors shadow-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.253 8H18"></path></svg>
                 <span id="btnSyncText" class="hidden sm:inline">Verileri Güncelle</span>
             </button>
         </div>
     </header>
 
     <!-- Hata Bannerı -->
-    <div id="networkErrorBanner" class="hidden bg-red-500 text-white px-6 py-2.5 text-sm font-medium flex items-center justify-between shrink-0 shadow-md z-20 transition-all">
-        <div class="flex items-center gap-3">
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span id="networkErrorText">Bağlantı hatası: Veriler çekilemiyor. Lütfen bağlantınızı kontrol edin.</span>
+    <div id="networkErrorBanner" class="hidden bg-red-500 text-white px-4 md:px-6 py-2 md:py-3 text-sm md:text-base font-medium flex items-center justify-between shrink-0 shadow-md z-20 transition-all">
+        <div class="flex items-center gap-2 md:gap-3">
+            <svg class="w-5 h-5 md:w-6 md:h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span id="networkErrorText">Bağlantı hatası: Veriler çekilemiyor.</span>
         </div>
-        <button onclick="hideErrorBanner()" class="hover:bg-red-600 p-1.5 rounded-lg transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+        <button onclick="hideErrorBanner()" class="hover:bg-red-600 p-1.5 rounded-lg transition-colors"><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
     </div>
 
-    <!-- Ana İçerik -->
-    <main class="flex-1 flex flex-col md:flex-row overflow-hidden">
+    <!-- Ana İçerik (Mobil uyumlu: Flex -> Hidden Toggle yapısı) -->
+    <main class="flex-1 flex overflow-hidden">
         
-        <!-- Sol Panel: Aday Listesi -->
-        <aside class="w-full md:w-80 lg:w-96 bg-white border-r border-slate-200 flex flex-col shrink-0 h-1/3 md:h-full border-b md:border-b-0">
+        <!-- Sol Panel: Aday Listesi ve Filtreler -->
+        <aside id="sidebarPanel" class="w-full md:w-[22rem] lg:w-[26rem] bg-white border-r border-slate-200 flex flex-col shrink-0 h-full z-10 transition-all">
+            
             <!-- Arama Inputu -->
-            <div class="p-4 border-b border-slate-100 bg-slate-50/50 shrink-0">
+            <div class="p-3 md:p-4 border-b border-slate-100 bg-slate-50/50 shrink-0">
                 <div class="relative">
-                    <input type="text" id="searchInput" oninput="filterList()" placeholder="İsim veya pozisyon ara..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-hedef-600 focus:border-transparent transition-all">
-                    <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <input type="text" id="searchInput" oninput="filterList()" placeholder="İsim veya pozisyon ara..." class="w-full pl-10 pr-4 py-2.5 md:py-3 bg-white border border-slate-300 rounded-xl text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-hedef-600 focus:border-transparent transition-all shadow-sm">
+                    <svg class="w-4 h-4 md:w-5 md:h-5 text-slate-400 absolute left-3.5 md:left-4 top-3 md:top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
             </div>
             
-            <!-- YENİ: Dönem / Sayfa Adı Filtresi -->
-            <div class="px-4 py-3 border-b border-slate-200 bg-white shrink-0">
-                <label for="periodFilter" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Dönem Filtresi</label>
-                <select id="periodFilter" onchange="filterList()" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-hedef-600 focus:border-transparent transition-all cursor-pointer">
-                    <option value="ALL">Tüm Dönemler</option>
-                    <!-- JavaScript ile Excel sayfa isimleri (Örn: HAZİRAN 2026) buraya dolacak -->
-                </select>
+            <!-- İkili Filtre Alanı -->
+            <div class="px-3 md:px-4 py-3 md:py-4 border-b border-slate-200 bg-white shrink-0 flex flex-col gap-3 md:gap-4">
+                <div>
+                    <label for="periodFilter" class="block text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-wider mb-1.5 md:mb-2">Dönem Filtresi</label>
+                    <select id="periodFilter" onchange="filterList()" class="w-full px-3 py-2 md:px-4 md:py-3 bg-slate-50 border border-slate-300 rounded-xl text-xs md:text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-hedef-600 focus:border-transparent transition-all cursor-pointer shadow-sm">
+                        <option value="ALL">Tüm Dönemler</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="badgeFilter" class="block text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-wider mb-1.5 md:mb-2">Aday Durumu</label>
+                    <select id="badgeFilter" onchange="filterList()" class="w-full px-3 py-2 md:px-4 md:py-3 bg-slate-50 border border-slate-300 rounded-xl text-xs md:text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-hedef-600 focus:border-transparent transition-all cursor-pointer shadow-sm">
+                        <option value="ALL">Tüm Adaylar (Hepsi)</option>
+                        <option value="Güçlü Aday">⭐ Güçlü Aday</option>
+                        <option value="Mülakata Uygun">✅ Mülakata Uygun</option>
+                        <option value="Gelişim Bekleyen">📈 Gelişim Bekleyen</option>
+                        <option value="RISK">⚠️ Riskli Profiller (Çelişki/Manipülasyon)</option>
+                    </select>
+                </div>
             </div>
             
-            <div class="px-4 py-2 bg-slate-100 flex justify-between items-center border-b border-slate-200 shrink-0">
-                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Aday Listesi</span>
-                <span id="candidateCount" class="bg-slate-200 text-slate-700 text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+            <div class="px-4 py-2.5 md:py-3 bg-slate-100 flex justify-between items-center border-b border-slate-200 shrink-0">
+                <span class="text-[11px] md:text-sm font-black text-slate-600 uppercase tracking-wider">Aday Listesi</span>
+                <span id="candidateCount" class="bg-hedef-100 text-hedef-700 text-xs md:text-sm font-bold px-2.5 py-0.5 md:px-3 md:py-1 rounded-full shadow-inner border border-hedef-200">0</span>
             </div>
 
-            <div id="candidateList" class="flex-1 overflow-y-auto divide-y divide-slate-100 hide-scroll">
-                <div class="p-8 text-center text-slate-400 text-sm">Veriler yükleniyor...</div>
+            <div id="candidateList" class="flex-1 overflow-y-auto divide-y divide-slate-100 hide-scroll pb-20 md:pb-0">
+                <div class="p-6 md:p-8 text-center text-slate-500 text-sm md:text-base font-medium">Veriler yükleniyor, lütfen bekleyin...</div>
             </div>
         </aside>
 
-        <!-- Sağ Panel: Detay Raporu -->
-        <section class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 bg-slate-50 relative">
+        <!-- Sağ Panel: Detay Raporu (Mobilde gizli, seçim yapılınca gösterilir) -->
+        <section id="reportPanel" class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 bg-slate-50 relative hidden md:block h-full transition-all">
             
             <!-- Boş Durum (Placeholder) -->
             <div id="emptyState" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-50 z-10 px-4">
-                <div class="w-20 h-20 md:w-24 md:h-24 bg-white rounded-full shadow-sm flex items-center justify-center mb-4">
-                    <svg class="w-10 h-10 md:w-12 md:h-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <div class="w-20 h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-white rounded-full shadow-md flex items-center justify-center mb-4 md:mb-6">
+                    <svg class="w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                 </div>
-                <h2 class="text-lg md:text-xl font-bold text-slate-700 text-center">Aday Seçilmedi</h2>
-                <p class="text-slate-500 mt-2 max-w-md text-center text-xs md:text-sm">Detaylı kişilik envanteri sonuçlarını, risk analizlerini ve grafiksel dağılımı görmek için listeden bir aday seçin.</p>
+                <h2 class="text-xl md:text-2xl lg:text-3xl font-black text-slate-700 text-center">Aday Seçilmedi</h2>
+                <p class="text-slate-500 mt-3 md:mt-4 max-w-lg text-center text-sm md:text-base lg:text-lg">Listeden bir adayı seçerek detaylı kişilik envanteri sonuçlarını, yapay zeka analizini ve risk grafiğini inceleyebilirsiniz.</p>
             </div>
 
             <!-- Rapor İçeriği -->
-            <div id="reportContent" class="max-w-6xl mx-auto space-y-6 hidden opacity-0 transition-opacity duration-300 pb-12">
+            <div id="reportContent" class="max-w-6xl mx-auto space-y-4 md:space-y-6 hidden opacity-0 transition-opacity duration-300 pb-16">
                 
-                <!-- 1. YENİ ÜST PROFİL KARTI (PREMIUM DARK THEME) -->
-                <div class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-hedef-900 rounded-2xl p-6 md:p-8 shadow-2xl flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 border border-slate-700/50">
+                <!-- MOBİL GERİ DÖN BUTONU -->
+                <button onclick="showMobileList()" class="md:hidden flex items-center justify-center gap-2 w-full bg-slate-200/50 hover:bg-slate-200 text-slate-700 px-4 py-3 rounded-xl mb-2 font-bold transition-colors border border-slate-300/50 active:scale-[0.98]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Aday Listesine Geri Dön
+                </button>
+
+                <!-- 1. ÜST PROFİL KARTI (PREMIUM DARK THEME) -->
+                <div class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-hedef-900 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-10 shadow-2xl flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 md:gap-8 border border-slate-700/50">
                     <!-- Dekoratif Işık Efekti -->
-                    <div class="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-hedef-500 opacity-20 rounded-full blur-3xl pointer-events-none"></div>
-                    <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-48 h-48 bg-blue-500 opacity-10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute top-0 right-0 -mt-20 -mr-20 w-56 h-56 md:w-72 md:h-72 bg-hedef-500 opacity-20 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-40 h-40 md:w-56 md:h-56 bg-blue-500 opacity-10 rounded-full blur-3xl pointer-events-none"></div>
                     
                     <div class="relative z-10 w-full lg:w-auto">
-                        <div class="flex flex-wrap items-center gap-3 mb-2">
-                            <h2 id="detName" class="text-2xl md:text-3xl font-black text-white tracking-tight">Ad Soyad</h2>
-                            <span id="detBadge" class="px-3 py-1 text-[11px] font-bold uppercase tracking-wider rounded-md border shrink-0 shadow-sm">Durum</span>
+                        <div class="flex flex-wrap items-center gap-2 md:gap-3 mb-2">
+                            <h2 id="detName" class="text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight drop-shadow-md">Ad Soyad</h2>
+                            <span id="detBadge" class="px-2 md:px-3 py-1 text-[10px] md:text-[11px] lg:text-xs font-bold uppercase tracking-widest rounded-md border shrink-0 shadow-lg">Durum</span>
+                            <span id="detRiskBadge" class="hidden px-2 md:px-3 py-1 text-[10px] md:text-[11px] lg:text-xs font-bold uppercase tracking-widest rounded-md border border-rose-400 bg-rose-500/30 text-rose-200 shrink-0 shadow-lg flex items-center gap-1"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg> <span id="detRiskText">Risk</span></span>
                         </div>
-                        <p id="detPosition" class="text-hedef-400 font-semibold text-sm md:text-base mb-4">Pozisyon</p>
+                        <p id="detPosition" class="text-hedef-400 font-semibold text-sm md:text-base lg:text-lg mb-4 md:mb-5 tracking-wide">Pozisyon</p>
                         
-                        <div class="flex flex-wrap gap-4 text-xs md:text-sm text-slate-300">
-                            <div class="flex items-center gap-1.5"><svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> <span id="detEmail" class="truncate">-</span></div>
-                            <div class="flex items-center gap-1.5"><svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> <span id="detPhone">-</span></div>
-                            <div class="flex items-center gap-1.5 bg-slate-800/80 px-2.5 py-1 rounded-md border border-slate-600/50 shadow-inner backdrop-blur-sm"><svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> <span id="detDate" class="hidden"></span><span id="detPeriod" class="text-slate-200 font-medium">-</span></div>
+                        <div class="flex flex-wrap gap-2 md:gap-4 text-[11px] md:text-xs lg:text-sm text-slate-300 font-medium">
+                            <div class="flex items-center gap-1.5 md:gap-2 w-full sm:w-auto"><svg class="w-4 h-4 md:w-5 md:h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> <span id="detEmail" class="truncate">-</span></div>
+                            <div class="flex items-center gap-1.5 md:gap-2 w-full sm:w-auto"><svg class="w-4 h-4 md:w-5 md:h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> <span id="detPhone">-</span></div>
+                            <div class="flex items-center gap-1.5 md:gap-2 bg-slate-800/80 px-2.5 py-1 md:px-3 md:py-1.5 rounded-lg border border-slate-600/50 shadow-inner backdrop-blur-sm mt-1 sm:mt-0"><svg class="w-4 h-4 md:w-5 md:h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> <span id="detDate" class="hidden"></span><span id="detPeriod" class="text-white font-bold tracking-wide">-</span></div>
                         </div>
                     </div>
                     
                     <!-- Adayın Cevaplarını Gör Butonu -->
                     <div class="relative z-10 flex flex-col items-start lg:items-end w-full lg:w-auto mt-2 lg:mt-0">
-                        <button onclick="openAnswersModal()" class="w-full lg:w-auto group bg-gradient-to-r from-white to-slate-50 hover:to-white text-slate-900 px-6 py-3.5 rounded-xl text-sm font-bold transition-all shadow-lg hover:shadow-hedef-500/20 flex items-center justify-center gap-2 transform hover:-translate-y-1 border border-transparent hover:border-slate-200">
-                            <svg class="w-5 h-5 text-hedef-600 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                        <button onclick="openAnswersModal()" class="w-full lg:w-auto group bg-gradient-to-r from-white to-slate-100 hover:to-white text-slate-900 px-5 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl text-sm md:text-base lg:text-lg font-black transition-all shadow-xl hover:shadow-hedef-500/30 flex items-center justify-center gap-2 md:gap-3 transform hover:-translate-y-1 border border-transparent hover:border-slate-300">
+                            <svg class="w-5 h-5 md:w-6 md:h-6 text-hedef-600 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                             Soru Kitapçığını İncele
                         </button>
-                        <p class="text-[11px] text-slate-400 mt-2.5 text-center lg:text-right w-full flex items-center justify-center lg:justify-end gap-1.5">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
-                            50 Soru ve Ham Veriler
+                        <p class="text-[10px] md:text-xs lg:text-sm text-slate-300 mt-2.5 md:mt-3 text-center lg:text-right w-full flex items-center justify-center lg:justify-end gap-1.5 md:gap-2 font-medium">
+                            <span class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_12px_rgba(52,211,153,0.9)]"></span>
+                            Adayın Tüm Cevapları ve Analizi
                         </p>
                     </div>
                 </div>
 
                 <!-- 2. SATIR: ÖZET VE SKORLAR GRID -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
                     
                     <!-- Sistem Değerlendirme Özeti -->
-                    <div class="lg:col-span-2 bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm flex flex-col hover:shadow-md transition-all relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-bl-full -z-10"></div>
-                        <div class="flex items-center gap-3 mb-4 border-b border-slate-100 pb-4">
-                            <div class="bg-gradient-to-br from-indigo-50 to-blue-100 p-2.5 rounded-xl border border-indigo-100/50 shadow-sm">
-                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <div class="lg:col-span-2 bg-white border border-slate-200/80 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-8 shadow-md flex flex-col hover:shadow-lg transition-all relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 md:w-40 md:h-40 bg-indigo-50 rounded-bl-full -z-10"></div>
+                        <div class="flex items-center gap-3 md:gap-4 mb-4 md:mb-6 border-b border-slate-100 pb-4 md:pb-5">
+                            <div class="bg-gradient-to-br from-indigo-100 to-blue-200 p-2 md:p-3 rounded-xl md:rounded-2xl border border-indigo-200/50 shadow-sm shrink-0">
+                                <svg class="w-6 h-6 md:w-7 md:h-7 text-indigo-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             </div>
                             <div>
-                                <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wide">Yapay Zeka Yorumu & Sentez</h3>
-                                <p class="text-[11px] text-slate-500 mt-0.5">Bu adayın yanıt patternine özel üretilmiş dinamik analiz.</p>
+                                <h3 class="text-sm md:text-base lg:text-lg font-bold text-slate-800 uppercase tracking-widest leading-tight">Yapay Zeka Yorumu & Sentez</h3>
+                                <p class="text-[10px] md:text-xs text-slate-500 mt-1 font-medium hidden sm:block">Bu adayın yanıt patternine özel üretilmiş dinamik rapor analizi.</p>
                             </div>
                         </div>
                         <div class="space-y-4 flex-1 flex flex-col justify-center relative z-10">
-                            <p id="summaryMainText" class="text-[14px] text-slate-700 font-medium leading-relaxed italic border-l-4 border-indigo-400 pl-4 py-1"></p>
-                            <div class="bg-slate-50/80 rounded-xl p-4 border border-slate-100 mt-auto backdrop-blur-sm">
-                                <p id="summaryDimText" class="text-[13px] text-slate-600 leading-relaxed font-medium"></p>
+                            <p id="summaryMainText" class="text-sm md:text-base text-slate-800 font-medium leading-relaxed border-l-4 border-indigo-400 pl-3 md:pl-4 py-1"></p>
+                            <div class="bg-slate-50/80 rounded-xl p-3 md:p-4 border border-slate-100 mt-auto backdrop-blur-sm">
+                                <p id="summaryDimText" class="text-xs md:text-sm text-slate-700 leading-relaxed font-medium"></p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Genel Uyum Skoru Kartı -->
-                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col items-center justify-center relative overflow-hidden group">
-                        <div class="absolute top-0 w-full h-1.5 bg-gradient-to-r from-slate-200 via-hedef-500 to-slate-200 opacity-50"></div>
-                        <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-5">Genel Profil Skoru</h3>
+                    <div class="bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-6 shadow-md flex flex-col items-center justify-center relative overflow-hidden group">
+                        <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-slate-200 via-hedef-500 to-slate-200 opacity-50"></div>
+                        <h3 class="text-[11px] md:text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 md:mb-4 text-center">Genel Profil Skoru</h3>
                         
-                        <!-- Circular Progress Grafiği -->
-                        <div class="relative w-36 h-36 flex items-center justify-center mb-2">
+                        <div class="relative w-32 h-32 md:w-40 md:h-40 flex items-center justify-center mb-2">
                             <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                                 <path class="text-slate-100" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                                 <path id="circleGenel" class="text-hedef-500 transition-all duration-1000 ease-out" stroke-dasharray="0, 100" stroke-width="3" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                             </svg>
                             <div class="absolute flex flex-col items-center justify-center">
-                                <span id="scoreGenel" class="text-4xl font-black text-slate-800 tracking-tighter">0</span>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase mt-1">/ 100</span>
+                                <span id="scoreGenel" class="text-4xl md:text-5xl font-black text-slate-800 tracking-tighter">0</span>
+                                <span class="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mt-1">/ 100</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 3. SATIR: RİSK METRİKLERİ -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <!-- Tutarsızlık -->
-                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex items-center justify-between group hover:border-slate-300 transition-colors">
+                    <div class="bg-white border border-slate-200 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm flex items-center justify-between group hover:border-slate-300 transition-colors">
                         <div>
-                            <div class="flex items-center gap-2 mb-1.5">
-                                <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Tutarsızlık Skoru</h3>
-                                <span class="text-slate-400 text-[9px] font-bold bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">MAKS: 16</span>
+                            <div class="flex flex-wrap items-center gap-2 md:gap-3 mb-1.5 md:mb-2">
+                                <h3 class="text-xs md:text-sm font-black text-slate-500 uppercase tracking-widest">Tutarsızlık</h3>
+                                <span class="text-slate-500 text-[10px] md:text-xs font-black bg-slate-100 px-1.5 py-0.5 md:px-2 md:py-1 rounded-md border border-slate-200">MAKS: 16</span>
                             </div>
-                            <p id="textTutarsizlik" class="text-sm font-bold mt-1">-</p>
+                            <p id="textTutarsizlik" class="text-sm md:text-base lg:text-lg font-bold mt-1">-</p>
                         </div>
-                        <div id="boxTutarsizlik" class="w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform">
-                            <span id="scoreTutarsizlik" class="text-xl font-black">0</span>
+                        <div id="boxTutarsizlik" class="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform shadow-sm shrink-0">
+                            <span id="scoreTutarsizlik" class="text-xl md:text-2xl font-black">0</span>
                         </div>
                     </div>
 
                     <!-- Sosyal Beğenirlik -->
-                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex items-center justify-between group hover:border-slate-300 transition-colors">
+                    <div class="bg-white border border-slate-200 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm flex items-center justify-between group hover:border-slate-300 transition-colors">
                         <div>
-                            <div class="flex items-center gap-2 mb-1.5">
-                                <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Sosyal Beğenirlik</h3>
-                                <span class="text-slate-400 text-[9px] font-bold bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">MAKS: 15</span>
+                            <div class="flex flex-wrap items-center gap-2 md:gap-3 mb-1.5 md:mb-2">
+                                <h3 class="text-xs md:text-sm font-black text-slate-500 uppercase tracking-widest">Manipülasyon</h3>
+                                <span class="text-slate-500 text-[10px] md:text-xs font-black bg-slate-100 px-1.5 py-0.5 md:px-2 md:py-1 rounded-md border border-slate-200">MAKS: 15</span>
                             </div>
-                            <p id="textFakeGood" class="text-sm font-bold mt-1">-</p>
+                            <p id="textFakeGood" class="text-sm md:text-base lg:text-lg font-bold mt-1">-</p>
                         </div>
-                        <div id="boxFakeGood" class="w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform">
-                            <span id="scoreFakeGood" class="text-xl font-black">0</span>
+                        <div id="boxFakeGood" class="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform shadow-sm shrink-0">
+                            <span id="scoreFakeGood" class="text-xl md:text-2xl font-black">0</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Risk Banner (Yalnızca Kritik Risk Varsa Görünür) -->
-                <div id="riskBanner" class="hidden flex bg-rose-50 border-l-4 border-rose-500 p-4 rounded-r-xl items-start gap-3 shadow-sm">
-                    <svg class="w-6 h-6 shrink-0 mt-0.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <!-- Risk Banner -->
+                <div id="riskBanner" class="hidden flex bg-rose-50 border-l-[4px] md:border-l-[6px] border-rose-500 p-4 md:p-5 rounded-r-xl md:rounded-r-2xl items-start gap-3 md:gap-4 shadow-md">
+                    <svg class="w-6 h-6 md:w-8 md:h-8 shrink-0 mt-0.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                     <div>
-                        <h4 class="font-bold text-sm text-rose-900">Sistem Uyarısı: Riskli Metrikler Tespit Edildi</h4>
-                        <p id="riskText" class="text-[13px] text-rose-700 mt-1 font-medium"></p>
+                        <h4 class="font-black text-sm md:text-base lg:text-lg text-rose-900 leading-tight">Sistem Uyarısı: Riskli Metrikler Tespit Edildi</h4>
+                        <p id="riskText" class="text-xs md:text-sm lg:text-base text-rose-800 mt-1.5 font-semibold"></p>
                     </div>
                 </div>
 
                 <!-- 4. SATIR: GRAFİKLER -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
                     <!-- Radar Grafik -->
-                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col min-h-[350px]">
-                        <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-4 text-center">Kişilik Boyutları Dağılımı</h3>
+                    <div class="bg-white border border-slate-200 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-md flex flex-col min-h-[300px] md:min-h-[400px]">
+                        <h3 class="text-xs md:text-sm font-black text-slate-500 uppercase tracking-widest mb-4 md:mb-6 text-center">Kişilik Boyutları Dağılımı</h3>
                         <div class="flex-1 relative w-full h-full">
                             <canvas id="radarChart"></canvas>
                         </div>
                     </div>
                     <!-- Boyut Barları -->
-                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col">
-                        <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-5">Detaylı Boyut Puanları</h3>
-                        <div id="dimensionsList" class="space-y-4 flex-1 overflow-y-auto pr-2 hide-scroll">
+                    <div class="bg-white border border-slate-200 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-md flex flex-col">
+                        <h3 class="text-xs md:text-sm font-black text-slate-500 uppercase tracking-widest mb-4 md:mb-6">Detaylı Boyut Puanları</h3>
+                        <div id="dimensionsList" class="space-y-4 md:space-y-5 flex-1 overflow-y-auto pr-2 md:pr-3 hide-scroll">
                             <!-- Boyut çubukları JS ile gelecek -->
                         </div>
                     </div>
@@ -281,55 +300,51 @@
     </main>
 
     <!-- YENİ: Adayın Detaylı Cevapları Modal Ekranı -->
-    <div id="answersModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div id="answersModalContent" class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden modal-enter">
+    <div id="answersModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[60] hidden flex items-center justify-center p-2 md:p-4">
+        <div id="answersModalContent" class="bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-2xl w-full max-w-6xl max-h-[95vh] md:max-h-[90vh] flex flex-col overflow-hidden modal-enter border border-slate-200">
             <!-- Modal Başlık -->
-            <div class="p-5 md:p-6 border-b border-slate-200 flex justify-between items-center bg-slate-50 shrink-0">
-                <div>
-                    <h3 class="text-lg md:text-xl font-bold text-slate-800">Adayın Soru Bazlı Cevapları</h3>
-                    <p class="text-xs md:text-sm text-slate-500 mt-1" id="modalCandidateName">Ad Soyad Yükleniyor...</p>
+            <div class="p-4 md:p-6 border-b border-slate-200 flex justify-between items-center bg-slate-50 shrink-0">
+                <div class="pr-2">
+                    <h3 class="text-lg md:text-2xl font-bold text-slate-900 leading-tight">Soru Bazlı Yanıt Analizi</h3>
+                    <p class="text-xs md:text-base text-slate-500 mt-1 font-medium truncate max-w-[200px] sm:max-w-none" id="modalCandidateName">Ad Soyad Yükleniyor...</p>
                 </div>
-                <button onclick="closeAnswersModal()" class="text-slate-400 hover:text-slate-700 bg-slate-200 hover:bg-slate-300 p-2 rounded-lg transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <button onclick="closeAnswersModal()" class="text-slate-500 hover:text-slate-900 bg-slate-200 hover:bg-slate-300 p-2 md:p-2.5 rounded-lg transition-colors shadow-sm shrink-0">
+                    <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
             
             <!-- Modal İçerik (Sorular Grid) -->
-            <div class="p-5 md:p-6 overflow-y-auto flex-1 bg-slate-100/50 relative">
-                <div id="answersGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-4 transition-all duration-300">
+            <div class="p-3 md:p-8 overflow-y-auto flex-1 bg-slate-100/50 relative">
+                <div id="answersGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-5 transition-all duration-300">
                    <!-- JavaScript ile pagination kontrollü sorular buraya dolacak -->
                 </div>
             </div>
             
-            <!-- YENİ: Pagination Kontrolleri -->
-            <div class="px-5 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between shrink-0">
-                <span class="text-xs font-medium text-slate-500" id="paginationInfo">Sayfa 1 / 5</span>
-                <div class="flex items-center gap-1" id="paginationControls">
+            <!-- Pagination Kontrolleri -->
+            <div class="px-4 py-3 md:px-6 md:py-4 border-t border-slate-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between shrink-0 gap-3 md:gap-4">
+                <span class="text-xs md:text-sm font-bold text-slate-600 uppercase tracking-widest text-center sm:text-left" id="paginationInfo">Sayfa 1 / 5</span>
+                <div class="flex items-center justify-center gap-1.5 md:gap-2" id="paginationControls">
                     <!-- JS ile dinamik butonlar dolacak -->
                 </div>
             </div>
             
             <!-- Modal Alt Bilgi -->
-            <div class="p-4 md:p-5 border-t border-slate-200 bg-white text-xs text-slate-600 shrink-0 flex flex-col md:flex-row md:items-center justify-between gap-3">
-                <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
-                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> <span>4-5 Puan (Olumlu Çizgi)</span></div>
-                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-400"></span> <span>3 Puan (Nötr / Kararsız)</span></div>
-                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-rose-500"></span> <span>1-2 Puan (Gelişim Alanı / Risk)</span></div>
+            <div class="p-3 md:p-6 border-t border-slate-200 bg-slate-50 text-xs md:text-sm text-slate-600 shrink-0 flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4 font-medium">
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2">
+                    <div class="flex items-center gap-1.5 md:gap-2"><span class="w-3 h-3 md:w-4 md:h-4 rounded-full bg-emerald-500 shadow-sm"></span> <span class="text-slate-800 font-bold">Olumlu (4-5 Puan)</span></div>
+                    <div class="flex items-center gap-1.5 md:gap-2"><span class="w-3 h-3 md:w-4 md:h-4 rounded-full bg-amber-400 shadow-sm"></span> <span class="text-slate-800 font-bold">Nötr (3 Puan)</span></div>
+                    <div class="flex items-center gap-1.5 md:gap-2"><span class="w-3 h-3 md:w-4 md:h-4 rounded-full bg-rose-500 shadow-sm"></span> <span class="text-slate-800 font-bold">Riskli (1-2 Puan)</span></div>
                 </div>
-                <div class="text-slate-400 font-medium italic">* Renklendirmeler ters puanlama hesaba katılarak (gerçek etkiye göre) yapılmıştır.</div>
+                <div class="text-slate-500 font-semibold italic text-[10px] md:text-xs bg-white px-3 py-2 md:px-4 md:py-2 rounded-lg border border-slate-200 shadow-sm text-center md:text-left">
+                    <span class="font-bold text-slate-700">Not:</span> Renklendirmeler ters puanlama hesaba katılarak adayın kuruma uyum etkisine göre yapılmıştır.
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         /** YAPILANDIRMA VE SABİTLER */
-        // Web App URL'niz varsa buraya yazabilirsiniz (doGet için).
-        // Yoksa mevcut Spreadsheet ID üzerinden GViz ile çekmeye devam eder.
         const SPREADSHEET_ID = "1hNDJukiVPOKf2SozjSEa3JFzz8Kqny3U21xPqdoC4tM";
-        
-        // EĞER WEB APP YAYINLADIYSANIZ:
-        // const SCRIPT_URL = "https://script.google.com/macros/s/AKfycb.../exec";
-        // ŞİMDİLİK MEVCUT SİSTEMİ KORUYORUZ (GViz):
         const SCRIPT_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json`;
 
         // Ters Puanlama (Reverse Scoring) kuralına tabi olan sorular
@@ -346,7 +361,6 @@
             "Dürüstlük / Öz Farkındalık": [37, 38, 39, 40, 41, 42]
         };
 
-        // Cevap Seçenekleri Metinleri
         const ANSWER_LABELS = {
             1: "Kesinlikle Katılmıyorum",
             2: "Katılmıyorum",
@@ -355,7 +369,6 @@
             5: "Kesinlikle Katılıyorum"
         };
 
-        // 50 Soruluk Envanter Soru Havuzu (Kendi sorularınızla birebir değiştirebilirsiniz)
         const QUESTIONS = [
             "Çalışırken detaylara çok dikkat ederim ve hata yapmamaya özen gösteririm.",
             "Kurallara ve prosedürlere sıkı sıkıya bağlı kalmak beni kısıtlar.",
@@ -409,12 +422,45 @@
             "İnsanlarla sürekli iletişim halinde olmak beni çok yorar."
         ];
 
-        // Durum tutucular
         let allCandidates = [];
         let radarChartInstance = null;
         let selectedCandidateId = null; 
         let dataFetchInterval = null;
-        let availablePeriods = new Set(); // YENİ: Dönemleri tutacağımız küme
+        let availablePeriods = new Set(); 
+
+        /** MOBİL EKRAN YÖNETİMİ */
+        window.addEventListener('resize', () => {
+            const sidebar = document.getElementById('sidebarPanel');
+            const report = document.getElementById('reportPanel');
+            
+            if(window.innerWidth >= 768) {
+                sidebar.classList.remove('hidden');
+                sidebar.classList.add('flex');
+                report.classList.remove('hidden');
+                report.classList.add('block');
+            } else {
+                if (selectedCandidateId !== null) {
+                    sidebar.classList.add('hidden');
+                    sidebar.classList.remove('flex');
+                    report.classList.remove('hidden');
+                    report.classList.add('block');
+                } else {
+                    sidebar.classList.remove('hidden');
+                    sidebar.classList.add('flex');
+                    report.classList.add('hidden');
+                    report.classList.remove('block');
+                }
+            }
+        });
+
+        function showMobileList() {
+            const sidebar = document.getElementById('sidebarPanel');
+            const report = document.getElementById('reportPanel');
+            sidebar.classList.remove('hidden');
+            sidebar.classList.add('flex');
+            report.classList.add('hidden');
+            report.classList.remove('block');
+        }
 
         /** GİRİŞ SİSTEMİ (LOGIN) */
         function handleLogin() {
@@ -440,7 +486,7 @@
         function startDashboard() {
             fetchData();
             if(dataFetchInterval) clearInterval(dataFetchInterval);
-            dataFetchInterval = setInterval(fetchData, 10000); // Yoğunluğu azaltmak için 10 saniyeye çıkarıldı
+            dataFetchInterval = setInterval(fetchData, 10000); 
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -467,23 +513,20 @@
             if (banner) banner.classList.add('hidden');
         }
 
-        /** YENİ: TARİHTEN DÖNEM (AY/YIL) ÇIKARTMA FONKSİYONU */
         function getPeriodFromDate(dateStr) {
             if (!dateStr) return "Bilinmeyen Dönem";
             let month = -1, year = -1;
             
-            // GViz Formatı: Date(2026,5,16,15,30,0) (Aylar 0 indexlidir)
             const gvizMatch = dateStr.match(/Date\((\d+),\s*(\d+)/);
             if (gvizMatch) {
                 year = parseInt(gvizMatch[1]);
                 month = parseInt(gvizMatch[2]);
             } else {
-                // Standart String Formatı: 16.06.2026 veya 2026-06-16
                 const parts = dateStr.split(/[-./\s]/);
                 if (parts.length >= 3) {
-                    if (parts[0].length === 4) { // YYYY-MM-DD
+                    if (parts[0].length === 4) { 
                         year = parseInt(parts[0]); month = parseInt(parts[1]) - 1;
-                    } else { // DD.MM.YYYY
+                    } else { 
                         year = parseInt(parts[2]); month = parseInt(parts[1]) - 1;
                     }
                 }
@@ -496,7 +539,6 @@
             return "Genel Havuz";
         }
 
-        /** VERİ ÇEKME - HEM WEB APP JSON HEM GVIZ JSON DESTEKLİ */
         async function fetchData() {
             const syncIcon = document.querySelector('#btnSync svg');
 
@@ -511,7 +553,6 @@
                 const text = await response.text();
                 let rawData = [];
 
-                // YENİ: App Script (Web App) JSON Dizisi mi yoksa GViz Formatı mı kontrolü
                 if (text.trim().startsWith('[')) {
                     rawData = JSON.parse(text);
                 } else {
@@ -553,7 +594,7 @@
                     processData(rawData);
                     hideErrorBanner(); 
                 } else {
-                    document.getElementById('candidateList').innerHTML = '<div class="p-6 text-center text-slate-500 text-sm font-medium">Tablo boş veya veriler henüz işlenmedi.</div>';
+                    document.getElementById('candidateList').innerHTML = '<div class="p-8 text-center text-slate-500 text-sm md:text-base font-medium">Tablo boş veya veriler henüz işlenmedi.</div>';
                     document.getElementById('candidateCount').innerText = "0";
                 }
 
@@ -565,7 +606,6 @@
             }
         }
 
-        /** ALGORİTMA: VERİ İŞLEME VE HESAPLAMA */
         function processData(rawData) {
             let tempPeriods = new Set();
 
@@ -615,53 +655,49 @@
                 let highestDim = Object.keys(dimScores).reduce((a, b) => dimScores[a] > dimScores[b] ? a : b);
                 let lowestDim = Object.keys(dimScores).reduce((a, b) => dimScores[a] < dimScores[b] ? a : b);
 
-                // YENİ KARAR KURALLARI (Gerçekçi ve Esnek Sınırlar)
                 let badge = {};
-                if (tutarsizlik > 7) {
-                    badge = { text: "Çelişkili Profil", style: "bg-orange-500/20 text-orange-200 border-orange-500/30" };
-                } else if (fakeGoodSum > 12) {
-                    badge = { text: "Manipülasyon Riski", style: "bg-rose-500/20 text-rose-200 border-rose-500/30" };
-                } else if (genelSkor >= 75) {
-                    badge = { text: "Güçlü Aday", style: "bg-emerald-500/20 text-emerald-200 border-emerald-500/30" };
+                if (genelSkor >= 75) {
+                    badge = { text: "Güçlü Aday", style: "bg-emerald-500/10 text-emerald-700 border-emerald-500/40" };
                 } else if (genelSkor >= 60) {
-                    badge = { text: "Mülakata Uygun", style: "bg-blue-500/20 text-blue-200 border-blue-500/30" };
+                    badge = { text: "Mülakata Uygun", style: "bg-blue-500/10 text-blue-700 border-blue-500/40" };
                 } else {
-                    badge = { text: "Gelişim Bekleyen", style: "bg-slate-500/20 text-slate-200 border-slate-500/30" };
+                    badge = { text: "Gelişim Bekleyen", style: "bg-slate-500/10 text-slate-700 border-slate-500/40" };
                 }
 
-                // YENİ: DİNAMİK YAPAY ZEKA SENTEZİ
+                let isRisky = tutarsizlik > 7 || fakeGoodSum > 12;
+                let riskType = "Yok";
+                if (tutarsizlik > 7 && fakeGoodSum > 12) riskType = "Çoklu";
+                else if (tutarsizlik > 7) riskType = "Çelişki";
+                else if (fakeGoodSum > 12) riskType = "Manipülasyon";
+
                 let aiSentences = [];
-                let nameStr = row["Ad Soyad"].split(' ')[0]; // Sadece ilk ismi al, daha samimi bir rapor dili için
+                let nameStr = row["Ad Soyad"].split(' ')[0]; 
                 if(!nameStr || nameStr.toLowerCase() === "isimsiz") nameStr = "Aday";
 
-                // 1. Genel Giriş Cümlesi
-                if (genelSkor >= 80) aiSentences.push(`${nameStr}, kurum kültürümüze ve pozisyonun yetkinlik gerekliliklerine <strong>mükemmel bir uyum potansiyeli</strong> sergiliyor.`);
-                else if (genelSkor >= 65) aiSentences.push(`${nameStr}, genel hatlarıyla pozitif bir profil çizmekte olup, temel yetkinliklerde yeterli seviyede görünmektedir.`);
-                else if (genelSkor >= 50) aiSentences.push(`${nameStr} adlı adayın genel yetkinlik skoru ortalama düzeyde seyretmektedir.`);
-                else aiSentences.push(`${nameStr} adlı adayın genel yetkinlik skoru maalesef kurum beklentilerimizin oldukça altında kalmıştır.`);
+                if (genelSkor >= 75) aiSentences.push(`${nameStr}, kurum kültürümüze ve pozisyonun yetkinlik gerekliliklerine <strong>yüksek oranda uyum potansiyeli</strong> sergiliyor.`);
+                else if (genelSkor >= 60) aiSentences.push(`${nameStr}, genel hatlarıyla pozitif bir profil çizmekte olup, temel yetkinliklerde yeterli seviyede görünmektedir.`);
+                else aiSentences.push(`${nameStr} adlı adayın genel yetkinlik skoru kurum beklentilerimizin altında kalmıştır.`);
 
-                // 2. Risk ve Güvenilirlik Durumu
-                if (tutarsizlik > 7 && fakeGoodSum > 12) {
-                    aiSentences.push(`Ancak profil güvenilirliğinde ciddi sorunlar mevcut. Hem yanıtlar arası çelişkiler çok yüksek, hem de adayın kendisini kusursuz gösterme çabası (manipülasyon riski) kritik seviyede.`);
-                } else if (tutarsizlik > 7) {
-                    aiSentences.push(`Dikkat çeken en büyük unsur, benzer sorulara verilen <strong>yanıtlardaki yüksek tutarsızlıktır</strong>. Kararlılık gerektiren konularda adayın mülakatta zorlanması muhtemeldir.`);
-                } else if (fakeGoodSum > 12) {
-                    aiSentences.push(`Bunun yanında, adayın "Sosyal Beğenirlik" (idealize edilmiş profil çizme çabası) skoru çok yüksektir. Envanter sonuçlarının gerçek davranış eğiliminden çok, "istenilen cevapları verme" motivasyonuyla şekillendiği gözlemlenmiştir.`);
-                } else if (tutarsizlik <= 4 && fakeGoodSum <= 10) {
-                    aiSentences.push(`Cevap paternleri incelendiğinde son derece <strong>doğal, dürüst ve tutarlı</strong> bir veri seti elde edilmiştir.`);
+                if (isRisky) {
+                    if (tutarsizlik > 7 && fakeGoodSum > 12) {
+                        aiSentences.push(`Ancak profil güvenilirliğinde ciddi sorunlar mevcut. Yanıtlar arası yüksek tutarsızlık ve idealize edilmiş profil çizme (manipülasyon) çabası tespit edildi.`);
+                    } else if (tutarsizlik > 7) {
+                        aiSentences.push(`Dikkat çeken en büyük unsur, benzer sorulara verilen <strong>yanıtlardaki yüksek tutarsızlıktır</strong>. Mülakatta tutumlarının çapraz sorularla doğrulanması önerilir.`);
+                    } else if (fakeGoodSum > 12) {
+                        aiSentences.push(`Bununla birlikte, adayın "Sosyal Beğenirlik" skoru yüksektir. Envanter sonuçlarının gerçek davranış eğiliminden çok, "istenilen cevapları verme" motivasyonuyla şekillendiği gözlemlenmiştir.`);
+                    }
+                } else {
+                    aiSentences.push(`Cevap paternleri incelendiğinde son derece <strong>doğal ve dürüst</strong> bir veri seti elde edilmiştir.`);
                 }
 
-                // 3. Sonuç Önerisi
-                if (badge.text === "Güçlü Aday" || badge.text === "Mülakata Uygun") {
-                    aiSentences.push(`Sonuç olarak, risk barındırmayan bu profilin işe alım sürecinde yetkinlik bazlı mülakatla detaylandırılması kesinlikle tavsiye edilir.`);
+                if (!isRisky && (badge.text === "Güçlü Aday" || badge.text === "Mülakata Uygun")) {
+                    aiSentences.push(`Sonuç olarak, risk barındırmayan bu profilin işe alım sürecinde mülakatla detaylandırılması kesinlikle tavsiye edilir.`);
                 } else if (badge.text === "Gelişim Bekleyen") {
                     aiSentences.push(`Adayın ekibe katılması halinde adaptasyon süreci için ekstra oryantasyon ve yönderlik (mentoring) gerekebilir.`);
-                } else {
-                    aiSentences.push(`Test sonuçlarının güvenilirliği düşük olduğundan, kararın referans kontrolü ve vaka analizi ile teyit edilmesi şarttır.`);
                 }
 
                 let summaryMainText = aiSentences.join(" ");
-                let summaryDimText = `<strong>Güçlü Yön:</strong> Analizler sonucunda adayın en belirgin yetkinliğinin <strong>${highestDim} (%${dimScores[highestDim]})</strong> olduğu, <br/><strong>Gelişim Alanı:</strong> Ekip içi uyum ve performansta en çok desteklenmesi gereken (en düşük skorlu) alanının ise <strong>${lowestDim} (%${dimScores[lowestDim]})</strong> olduğu tespit edilmiştir.`;
+                let summaryDimText = `<strong>Güçlü Yön:</strong> ${highestDim} (%${dimScores[highestDim]}) <br/><strong>Gelişim Alanı:</strong> ${lowestDim} (%${dimScores[lowestDim]})`;
 
                 return {
                     id: index,
@@ -675,6 +711,7 @@
                     },
                     metrics: {
                         genelSkor, tutarsizlik, fakeGoodSum, dimScores, badge, summaryMainText, summaryDimText,
+                        isRisky, riskType,
                         rawAnswers: rawAnswersForMetrics, 
                         processedAnswers: processedAnswers 
                     }
@@ -696,17 +733,13 @@
             }
         }
 
-        /** YENİ: DÖNEM FİLTRESİNİ GÜNCELLEME */
         function updatePeriodDropdown(newPeriods) {
             const selectEl = document.getElementById('periodFilter');
             const currentVal = selectEl.value;
             
-            // Yeni dönemleri global kümeye ekle
             newPeriods.forEach(p => availablePeriods.add(p));
             
-            // İçeriği yeniden oluştur
             let optionsHTML = '<option value="ALL">Tüm Dönemler</option>';
-            // Set'i Array'e çevirip alfabetik sıralayalım (Tersine sıralamak yılları daha iyi gösterebilir)
             let sortedPeriods = Array.from(availablePeriods).sort().reverse();
             
             sortedPeriods.forEach(p => {
@@ -714,62 +747,80 @@
             });
             
             selectEl.innerHTML = optionsHTML;
-            // Eski seçimi korumaya çalış
             if(Array.from(availablePeriods).includes(currentVal)) {
                 selectEl.value = currentVal;
             }
         }
 
-        /** ARAYÜZ: LİSTE OLUŞTURMA */
         function renderList(list) {
             const container = document.getElementById('candidateList');
             document.getElementById('candidateCount').innerText = list.length;
             container.innerHTML = "";
 
             if (list.length === 0) {
-                container.innerHTML = '<div class="p-6 text-center text-slate-500 text-sm font-medium">Aday bulunamadı.</div>';
+                container.innerHTML = '<div class="p-6 md:p-8 text-center text-slate-500 text-sm md:text-base font-medium">Uygun aday bulunamadı.</div>';
                 return;
             }
 
             list.forEach(c => {
                 const div = document.createElement('div');
-                div.className = `p-4 cursor-pointer hover:bg-hedef-50 transition-colors border-l-4 ${selectedCandidateId === c.id ? 'bg-hedef-50 border-hedef-600' : 'border-transparent'} flex justify-between items-center group`;
+                div.className = `p-3 md:p-4 cursor-pointer hover:bg-hedef-50 transition-colors border-l-4 ${selectedCandidateId === c.id ? 'bg-hedef-50 border-hedef-600' : 'border-transparent'} flex justify-between items-center group`;
                 div.id = `card-${c.id}`;
                 div.onclick = () => selectCandidate(c.id);
 
+                let riskHtml = c.metrics.isRisky ? `<svg class="w-4 h-4 text-rose-500 drop-shadow-sm" title="Riskli Profil" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>` : '';
+
                 div.innerHTML = `
-                    <div class="truncate pr-4 w-2/3">
-                        <div class="font-bold text-slate-800 text-sm truncate" title="${c.info.name}">${c.info.name}</div>
-                        <div class="text-xs text-slate-500 truncate mt-0.5" title="${c.info.position}">${c.info.position}</div>
+                    <div class="truncate pr-2 w-[55%]">
+                        <div class="font-bold text-slate-800 text-sm md:text-base truncate tracking-tight" title="${c.info.name}">${c.info.name}</div>
+                        <div class="text-xs md:text-sm font-medium text-slate-500 truncate mt-0.5" title="${c.info.position}">${c.info.position}</div>
                     </div>
-                    <div class="flex flex-col items-end shrink-0 gap-1.5 w-1/3">
-                        <span class="text-[9px] font-bold px-1.5 py-0.5 rounded uppercase border ${c.metrics.badge.style} whitespace-nowrap overflow-hidden text-ellipsis max-w-full" title="${c.metrics.badge.text}">${c.metrics.badge.text}</span>
-                        <span class="text-xs font-semibold text-slate-600">%${c.metrics.genelSkor}</span>
+                    <div class="flex flex-col items-end shrink-0 gap-1.5 w-[45%]">
+                        <span class="text-[9px] md:text-[11px] font-bold px-2 py-0.5 rounded uppercase border shadow-sm ${c.metrics.badge.style} whitespace-nowrap overflow-hidden text-ellipsis w-full text-center" title="${c.metrics.badge.text}">${c.metrics.badge.text}</span>
+                        <div class="flex items-center gap-1.5">
+                            ${riskHtml}
+                            <span class="text-[11px] md:text-xs font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200 shadow-sm">%${c.metrics.genelSkor} Uyum</span>
+                        </div>
                     </div>
                 `;
                 container.appendChild(div);
             });
         }
 
-        /** ARAMA VE DÖNEM FİLTRESİ (BİRLEŞTİRİLDİ) */
         function filterList() {
             const query = (document.getElementById('searchInput') || {value: ""}).value.toLowerCase();
             const period = document.getElementById('periodFilter').value;
+            const badge = document.getElementById('badgeFilter').value; 
             
             const filtered = allCandidates.filter(c => {
                 const matchesSearch = c.info.name.toLowerCase().includes(query) || c.info.position.toLowerCase().includes(query);
                 const matchesPeriod = (period === "ALL" || c.info.period === period);
-                return matchesSearch && matchesPeriod;
+                
+                let matchesBadge = true;
+                if (badge === "RISK") {
+                    matchesBadge = c.metrics.isRisky;
+                } else if (badge !== "ALL") {
+                    matchesBadge = (c.metrics.badge.text === badge);
+                }
+
+                return matchesSearch && matchesPeriod && matchesBadge;
             });
             
             renderList(filtered);
         }
 
-        /** ARAYÜZ: ADAY SEÇİMİ VE DETAY EKRANI */
         function selectCandidate(id, isAutoRefresh = false) {
             selectedCandidateId = id; 
             const candidate = allCandidates.find(c => c.id === id);
             if (!candidate) return;
+
+            // MOBİL GÖRÜNÜM: Adaya tıklandığında listeyi gizle, raporu göster.
+            if (window.innerWidth < 768) {
+                document.getElementById('sidebarPanel').classList.add('hidden');
+                document.getElementById('sidebarPanel').classList.remove('flex');
+                document.getElementById('reportPanel').classList.remove('hidden');
+                document.getElementById('reportPanel').classList.add('block');
+            }
 
             document.querySelectorAll('[id^="card-"]').forEach(el => el.classList.remove('bg-hedef-50', 'border-hedef-600'));
             const activeCard = document.getElementById(`card-${id}`);
@@ -787,22 +838,30 @@
             document.getElementById('detEmail').innerText = candidate.info.email;
             document.getElementById('detPhone').innerText = candidate.info.phone;
             
-            // Tarih ve Dönem
             let displayDate = candidate.info.date;
             if (displayDate.startsWith('Date')) displayDate = "Tarih Dönüştürülüyor...";
             document.getElementById('detDate').innerText = displayDate;
             document.getElementById('detPeriod').innerText = candidate.info.period;
 
-            // Rozet (Badge)
             const badgeEl = document.getElementById('detBadge');
             badgeEl.innerText = candidate.metrics.badge.text;
-            badgeEl.className = `px-3 py-1 text-[11px] font-bold uppercase tracking-wider rounded-md border shrink-0 shadow-sm ${candidate.metrics.badge.style}`;
+            let badgeDarkStyle = candidate.metrics.badge.style;
+            if(badgeDarkStyle.includes("bg-slate-500/10")) badgeDarkStyle = "bg-slate-200/20 text-white border-slate-400";
+            else if(badgeDarkStyle.includes("emerald")) badgeDarkStyle = "bg-emerald-500/30 text-emerald-200 border-emerald-400";
+            else if(badgeDarkStyle.includes("blue")) badgeDarkStyle = "bg-blue-500/30 text-blue-200 border-blue-400";
+            badgeEl.className = `px-2 md:px-3 py-1 text-[10px] md:text-[11px] lg:text-xs font-bold uppercase tracking-widest rounded-md border shrink-0 shadow-lg ${badgeDarkStyle}`;
 
-            // Yapay Zeka Özeti
+            const riskBadgeEl = document.getElementById('detRiskBadge');
+            if (candidate.metrics.isRisky) {
+                riskBadgeEl.classList.remove('hidden');
+                document.getElementById('detRiskText').innerText = candidate.metrics.riskType + " Riski";
+            } else {
+                riskBadgeEl.classList.add('hidden');
+            }
+
             document.getElementById('summaryMainText').innerHTML = candidate.metrics.summaryMainText;
             document.getElementById('summaryDimText').innerHTML = candidate.metrics.summaryDimText;
 
-            // Genel Skor (Dairesel Grafik)
             document.getElementById('scoreGenel').innerText = candidate.metrics.genelSkor;
             const circleGenel = document.getElementById('circleGenel');
             if (circleGenel) {
@@ -812,7 +871,6 @@
                 else circleGenel.className.baseVal = "text-slate-400 transition-all duration-1000 ease-out";
             }
 
-            // Tutarsızlık Skoru
             const tScore = candidate.metrics.tutarsizlik;
             document.getElementById('scoreTutarsizlik').innerText = tScore;
             const tText = document.getElementById('textTutarsizlik');
@@ -820,20 +878,19 @@
             const scoreTutEl = document.getElementById('scoreTutarsizlik');
             
             if (tScore > 7) { 
-                tText.innerText = "Yüksek Çelişki Riski"; tText.className = "text-sm font-bold mt-1 text-orange-600"; 
-                boxTut.className = "w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform bg-orange-50 border-orange-200";
-                scoreTutEl.className = "text-xl font-black text-orange-700";
+                tText.innerText = "Yüksek Çelişki"; tText.className = "text-xs md:text-sm lg:text-base font-bold mt-1 md:mt-1.5 text-orange-600"; 
+                boxTut.className = "w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform bg-orange-50 border-orange-200 shrink-0";
+                scoreTutEl.className = "text-xl md:text-2xl font-black text-orange-700";
             } else if (tScore >= 5) { 
-                tText.innerText = "Kabul Edilebilir Sapma"; tText.className = "text-sm font-bold mt-1 text-slate-600"; 
-                boxTut.className = "w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform bg-slate-50 border-slate-200";
-                scoreTutEl.className = "text-xl font-black text-slate-700";
+                tText.innerText = "Kabul Edilebilir Sapma"; tText.className = "text-xs md:text-sm lg:text-base font-bold mt-1 md:mt-1.5 text-slate-600"; 
+                boxTut.className = "w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform bg-slate-50 border-slate-200 shrink-0";
+                scoreTutEl.className = "text-xl md:text-2xl font-black text-slate-700";
             } else { 
-                tText.innerText = "Çok Tutarlı Profil"; tText.className = "text-sm font-bold mt-1 text-emerald-600"; 
-                boxTut.className = "w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform bg-emerald-50 border-emerald-200";
-                scoreTutEl.className = "text-xl font-black text-emerald-700";
+                tText.innerText = "Çok Tutarlı Profil"; tText.className = "text-xs md:text-sm lg:text-base font-bold mt-1 md:mt-1.5 text-emerald-600"; 
+                boxTut.className = "w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform bg-emerald-50 border-emerald-200 shrink-0";
+                scoreTutEl.className = "text-xl md:text-2xl font-black text-emerald-700";
             }
 
-            // Sosyal Beğenirlik Skoru
             const fgScore = candidate.metrics.fakeGoodSum;
             document.getElementById('scoreFakeGood').innerText = fgScore;
             const fgText = document.getElementById('textFakeGood');
@@ -841,37 +898,35 @@
             const scoreFgEl = document.getElementById('scoreFakeGood');
 
             if (fgScore > 12) { 
-                fgText.innerText = "Yüksek Manipülasyon"; fgText.className = "text-sm font-bold mt-1 text-rose-600"; 
-                boxFg.className = "w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform bg-rose-50 border-rose-200";
-                scoreFgEl.className = "text-xl font-black text-rose-700";
+                fgText.innerText = "Yüksek Manipülasyon"; fgText.className = "text-xs md:text-sm lg:text-base font-bold mt-1 md:mt-1.5 text-rose-600"; 
+                boxFg.className = "w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform bg-rose-50 border-rose-200 shrink-0";
+                scoreFgEl.className = "text-xl md:text-2xl font-black text-rose-700";
             } else if (fgScore >= 10) { 
-                fgText.innerText = "Hafif Eğilim"; fgText.className = "text-sm font-bold mt-1 text-slate-600"; 
-                boxFg.className = "w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform bg-slate-50 border-slate-200";
-                scoreFgEl.className = "text-xl font-black text-slate-700";
+                fgText.innerText = "Hafif Eğilim"; fgText.className = "text-xs md:text-sm lg:text-base font-bold mt-1 md:mt-1.5 text-slate-600"; 
+                boxFg.className = "w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform bg-slate-50 border-slate-200 shrink-0";
+                scoreFgEl.className = "text-xl md:text-2xl font-black text-slate-700";
             } else { 
-                fgText.innerText = "Doğal ve Objektif"; fgText.className = "text-sm font-bold mt-1 text-emerald-600"; 
-                boxFg.className = "w-14 h-14 rounded-full flex items-center justify-center border group-hover:scale-105 transition-transform bg-emerald-50 border-emerald-200";
-                scoreFgEl.className = "text-xl font-black text-emerald-700";
+                fgText.innerText = "Doğal ve Objektif"; fgText.className = "text-xs md:text-sm lg:text-base font-bold mt-1 md:mt-1.5 text-emerald-600"; 
+                boxFg.className = "w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform bg-emerald-50 border-emerald-200 shrink-0";
+                scoreFgEl.className = "text-xl md:text-2xl font-black text-emerald-700";
             }
 
-            // Risk Banner Gösterimi
             const riskBanner = document.getElementById('riskBanner');
             if (tScore > 7 || fgScore > 12) {
                 riskBanner.classList.remove('hidden');
                 document.getElementById('riskText').innerText = `${fgScore > 12 ? 'Sosyal Beğenirlik (Manipülasyon) puanı çok yüksek. ' : ''}${tScore > 7 ? 'Cevaplar arası yüksek tutarsızlık tespit edildi.' : ''}`;
             } else riskBanner.classList.add('hidden');
 
-            // Boyut Puanları Barları
             const dimList = document.getElementById('dimensionsList');
             dimList.innerHTML = "";
             for (let dim in candidate.metrics.dimScores) {
                 const val = candidate.metrics.dimScores[dim];
                 dimList.innerHTML += `
                     <div>
-                        <div class="flex justify-between text-[11px] font-bold text-slate-600 mb-1.5">
-                            <span>${dim}</span><span class="text-hedef-600">%${val}</span>
+                        <div class="flex justify-between text-[11px] md:text-xs font-black text-slate-700 mb-1.5 md:mb-2">
+                            <span>${dim}</span><span class="text-hedef-600 text-sm md:text-base">%${val}</span>
                         </div>
-                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div class="w-full bg-slate-100 h-2 md:h-3 rounded-full overflow-hidden shadow-inner border border-slate-200/50">
                             <div class="h-full bg-hedef-500 rounded-full" style="width: ${val}%"></div>
                         </div>
                     </div>
@@ -881,7 +936,6 @@
             drawRadar(candidate.metrics.dimScores);
         }
 
-        /** YENİ: DETAYLI CEVAPLAR MODALI VE PAGINATION FONKSİYONLARI */
         const ITEMS_PER_PAGE = 10;
         let currentModalPage = 1;
 
@@ -892,7 +946,6 @@
 
             document.getElementById('modalCandidateName').innerText = `${candidate.info.name} - ${candidate.info.position}`;
             
-            // Modalı her açtığımızda 1. sayfadan başlat
             currentModalPage = 1;
             renderAnswersPage(1);
 
@@ -912,14 +965,12 @@
 
             const grid = document.getElementById('answersGrid');
             
-            // Geçiş Animasyonu Başlat (Opaklık düşür)
             grid.classList.remove('page-fade-enter-active');
             grid.classList.add('page-fade-enter');
             
             setTimeout(() => {
                 grid.innerHTML = "";
                 
-                // Sayfalandırma Sınırları
                 const startIndex = (page - 1) * ITEMS_PER_PAGE + 1;
                 const endIndex = Math.min(page * ITEMS_PER_PAGE, 50);
 
@@ -927,68 +978,63 @@
                     const rawAns = candidate.metrics.rawAnswers[i];
                     const procAns = candidate.metrics.processedAnswers[i];
                     
-                    let bgColor = "bg-slate-50", textColor = "text-slate-700", borderColor = "border-slate-200";
+                    let bgColor = "bg-slate-50", textColor = "text-slate-800", borderColor = "border-slate-300";
                     
                     if (procAns >= 4) {
-                        bgColor = "bg-emerald-50/50"; textColor = "text-emerald-700"; borderColor = "border-emerald-200";
+                        bgColor = "bg-emerald-50/50"; textColor = "text-emerald-800"; borderColor = "border-emerald-300";
                     } else if (procAns <= 2) {
-                        bgColor = "bg-rose-50/50"; textColor = "text-rose-700"; borderColor = "border-rose-200";
+                        bgColor = "bg-rose-50/50"; textColor = "text-rose-800"; borderColor = "border-rose-300";
                     } else {
-                        bgColor = "bg-amber-50/50"; textColor = "text-amber-700"; borderColor = "border-amber-200";
+                        bgColor = "bg-amber-50/50"; textColor = "text-amber-800"; borderColor = "border-amber-300";
                     }
 
                     const isReverse = REVERSE_QUESTIONS.includes(i);
-                    const reverseIcon = isReverse ? `<div class="flex items-center gap-1 text-[10px] text-slate-400 bg-white px-2 py-1 rounded-md border border-slate-200 shadow-sm"><svg class="w-3 h-3" title="Ters Puanlanan Soru" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg> Ters Soru</div>` : '';
+                    const reverseIcon = isReverse ? `<div class="flex items-center gap-1 text-[9px] md:text-[10px] font-bold text-slate-500 bg-white px-1.5 md:px-2 py-0.5 md:py-1 rounded border border-slate-200 shadow-sm"><svg class="w-3 h-3 text-orange-500" title="Ters Puanlanan Soru" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg> Ters Soru</div>` : '';
 
                     const questionText = QUESTIONS[i - 1] || `Soru metni bulunamadı.`;
                     const answerText = ANSWER_LABELS[rawAns] || `Bilinmeyen Cevap`;
 
                     const box = document.createElement('div');
-                    box.className = `relative flex flex-col p-4 md:p-5 rounded-2xl border ${bgColor} ${borderColor} shadow-sm transition-all hover:shadow-md bg-white`;
+                    box.className = `relative flex flex-col p-3 md:p-5 rounded-xl border-2 ${bgColor} ${borderColor} shadow-sm transition-all hover:shadow-md bg-white`;
                     box.innerHTML = `
-                        <div class="flex justify-between items-start mb-3 gap-2">
-                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">Soru ${i}</span>
+                        <div class="flex justify-between items-start mb-2 md:mb-3 gap-2 md:gap-3">
+                            <span class="text-[10px] md:text-xs font-bold text-slate-600 uppercase tracking-widest shrink-0 bg-white px-2 py-0.5 md:px-2.5 md:py-1 rounded-md border border-slate-200 shadow-sm">Soru ${i}</span>
                             ${reverseIcon}
                         </div>
-                        <p class="text-sm md:text-[15px] font-medium text-slate-800 mb-4 flex-1 leading-relaxed">${questionText}</p>
-                        <div class="inline-flex items-center gap-2 w-max px-3 py-2 rounded-xl bg-white border ${borderColor} shadow-sm">
-                            <div class="flex items-center justify-center w-7 h-7 rounded-lg ${procAns >= 4 ? 'bg-emerald-100 text-emerald-700' : (procAns <= 2 ? 'bg-rose-100 text-rose-700' : 'bg-amber-100 text-amber-700')} font-bold text-sm shrink-0 shadow-inner">
+                        <p class="text-xs md:text-sm font-semibold text-slate-800 mb-3 md:mb-4 flex-1 leading-relaxed">${questionText}</p>
+                        <div class="inline-flex items-center gap-1.5 md:gap-2 w-max px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg bg-white border ${borderColor} shadow-sm">
+                            <div class="flex items-center justify-center w-5 h-5 md:w-6 md:h-6 rounded-md ${procAns >= 4 ? 'bg-emerald-100 text-emerald-800' : (procAns <= 2 ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800')} font-bold text-[10px] md:text-sm shrink-0 shadow-inner">
                                 ${rawAns}
                             </div>
-                            <span class="text-xs md:text-sm font-bold ${textColor}">${answerText}</span>
+                            <span class="text-[10px] md:text-xs font-bold ${textColor}">${answerText}</span>
                         </div>
                     `;
                     grid.appendChild(box);
                 }
 
-                // Sayfa Numarasını Güncelle ve UI Çiz
                 document.getElementById('paginationInfo').innerText = `Sayfa ${page} / 5`;
                 renderPaginationUI(page);
                 
-                // Animasyonla tekrar görünür yap
                 grid.classList.remove('page-fade-enter');
                 grid.classList.add('page-fade-enter-active');
-            }, 150); // fade out süresi kadar bekle
+            }, 150); 
         }
 
         function renderPaginationUI(currentPage) {
             const container = document.getElementById('paginationControls');
             let html = '';
             
-            // Önceki Butonu
-            html += `<button onclick="changePage(-1)" ${currentPage === 1 ? 'disabled class="p-1.5 rounded-lg text-slate-300 cursor-not-allowed"' : 'class="p-1.5 rounded-lg text-slate-600 hover:bg-slate-200 transition-colors"'}><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>`;
+            html += `<button onclick="changePage(-1)" ${currentPage === 1 ? 'disabled class="p-2 md:p-2.5 rounded-lg md:rounded-xl text-slate-300 cursor-not-allowed"' : 'class="p-2 md:p-2.5 rounded-lg md:rounded-xl text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors shadow-sm"'}><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>`;
             
-            // Sayfa Numaraları
             for(let i=1; i<=5; i++) {
                 if (i === currentPage) {
-                    html += `<button class="w-8 h-8 rounded-lg bg-hedef-600 text-white font-bold text-sm shadow-sm flex items-center justify-center transform scale-105 transition-transform">${i}</button>`;
+                    html += `<button class="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-hedef-600 text-white font-black text-sm md:text-base shadow-lg flex items-center justify-center transform scale-110 transition-transform">${i}</button>`;
                 } else {
-                    html += `<button onclick="renderAnswersPage(${i})" class="w-8 h-8 rounded-lg bg-transparent text-slate-600 font-medium text-sm hover:bg-slate-200 transition-colors flex items-center justify-center">${i}</button>`;
+                    html += `<button onclick="renderAnswersPage(${i})" class="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-slate-100 border border-transparent hover:border-slate-300 text-slate-700 font-bold text-xs md:text-sm hover:bg-slate-200 transition-colors flex items-center justify-center shadow-sm">${i}</button>`;
                 }
             }
             
-            // Sonraki Butonu
-            html += `<button onclick="changePage(1)" ${currentPage === 5 ? 'disabled class="p-1.5 rounded-lg text-slate-300 cursor-not-allowed"' : 'class="p-1.5 rounded-lg text-slate-600 hover:bg-slate-200 transition-colors"'}><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>`;
+            html += `<button onclick="changePage(1)" ${currentPage === 5 ? 'disabled class="p-2 md:p-2.5 rounded-lg md:rounded-xl text-slate-300 cursor-not-allowed"' : 'class="p-2 md:p-2.5 rounded-lg md:rounded-xl text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors shadow-sm"'}><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>`;
             
             container.innerHTML = html;
         }
@@ -1015,12 +1061,10 @@
             }, 200);
         }
 
-        // Modal dışına tıklayınca kapatma
         document.getElementById('answersModal').addEventListener('click', function(e) {
             if (e.target === this) closeAnswersModal();
         });
 
-        /** CHART.JS RADAR GRAFİĞİ */
         function drawRadar(scores) {
             const ctx = document.getElementById('radarChart').getContext('2d');
             const labels = Object.keys(scores);
@@ -1047,15 +1091,15 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    layout: { padding: { top: 25, bottom: 25, left: 20, right: 20 } },
+                    layout: { padding: { top: 20, bottom: 20, left: window.innerWidth < 768 ? 10 : 25, right: window.innerWidth < 768 ? 10 : 25 } },
                     plugins: { legend: { display: false } },
                     scales: {
                         r: {
-                            angleLines: { color: 'rgba(0, 0, 0, 0.05)' },
-                            grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                            angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                            grid: { color: 'rgba(0, 0, 0, 0.1)' },
                             pointLabels: {
-                                font: { family: "'Inter', sans-serif", size: 10, weight: '600' },
-                                color: '#475569',
+                                font: { family: "'Inter', sans-serif", size: window.innerWidth < 768 ? 10 : 11, weight: '700' },
+                                color: '#334155',
                                 callback: function(word) {
                                     if(word === "Dürüstlük / Öz Farkındalık") return ["Dürüstlük /", "Öz Farkındalık"];
                                     if(word === "Analitik Karar Verme") return ["Analitik Karar", "Verme"];
