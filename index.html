@@ -219,61 +219,99 @@
                         </div>
                     </div>
 
-                    <!-- Genel Uyum Skoru Kartı -->
-                    <div class="bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-6 shadow-md flex flex-col items-center justify-center relative overflow-hidden group">
-                        <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-slate-200 via-hedef-500 to-slate-200 opacity-50"></div>
-                        <h3 class="text-[11px] md:text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 md:mb-4 text-center">Genel Profil Skoru</h3>
-                        
-                        <div class="relative w-32 h-32 md:w-40 md:h-40 flex items-center justify-center mb-2">
+                    <!-- Genel Profil Skoru (YENİDEN EKLENDİ / HATAYI DÜZELTEN KISIM) -->
+                    <div class="bg-white border border-slate-200/80 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-8 shadow-md flex flex-col items-center justify-center hover:shadow-lg transition-all relative">
+                        <h3 class="text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-widest mb-4 md:mb-6 text-center w-full">Genel Profil Skoru</h3>
+                        <div class="relative w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
+                            <!-- Arka Plan Halkası -->
                             <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                                <path class="text-slate-100" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                <path id="circleGenel" class="text-hedef-500 transition-all duration-1000 ease-out" stroke-dasharray="0, 100" stroke-width="3" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <!-- İlerleme Çubuğu Halkası -->
+                                <path id="circleGenel" class="text-emerald-500 transition-all duration-1000 ease-out" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                             </svg>
-                            <div class="absolute flex flex-col items-center justify-center">
-                                <span id="scoreGenel" class="text-4xl md:text-5xl font-black text-slate-800 tracking-tighter">0</span>
-                                <span class="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mt-1">/ 100</span>
+                            <!-- İç Skor Metni -->
+                            <div class="absolute flex flex-col items-center justify-center mt-1">
+                                <span id="scoreGenel" class="text-4xl md:text-5xl font-black text-slate-800 tracking-tighter leading-none">0</span>
+                                <span class="text-[10px] md:text-xs font-bold text-slate-400 mt-1">/ 100</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. SATIR: RİSK METRİKLERİ -->
+                <!-- 3. SATIR: RİSK METRİKLERİ (YENİDEN TASARLANDI) -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <!-- Tutarsızlık -->
-                    <div class="bg-white border border-slate-200 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm flex items-center justify-between group hover:border-slate-300 transition-colors">
-                        <div>
-                            <div class="flex flex-wrap items-center gap-2 md:gap-3 mb-1.5 md:mb-2">
-                                <h3 class="text-xs md:text-sm font-black text-slate-500 uppercase tracking-widest">Tutarsızlık</h3>
-                                <span class="text-slate-500 text-[10px] md:text-xs font-black bg-slate-100 px-1.5 py-0.5 md:px-2 md:py-1 rounded-md border border-slate-200">MAKS: 16</span>
+                    <div class="bg-white border border-slate-200 rounded-xl md:rounded-2xl p-5 shadow-sm flex flex-col justify-between group hover:border-slate-300 transition-colors relative">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="pr-4">
+                                <h3 class="text-sm font-black text-slate-700 uppercase tracking-widest flex items-center gap-2">
+                                    Tutarlılık Analizi
+                                </h3>
+                                <p class="text-[11px] md:text-xs text-slate-500 mt-1.5 font-medium leading-snug">
+                                    Adayın, birbirinin sağlaması niteliğinde olan çapraz sorulara verdiği zıt yanıtların ölçümüdür. <strong class="text-slate-700">Puanın düşük olması adayın samimi ve dikkatli olduğunu gösterir.</strong>
+                                </p>
                             </div>
-                            <p id="textTutarsizlik" class="text-sm md:text-base lg:text-lg font-bold mt-1">-</p>
+                            <div id="boxTutarsizlik" class="w-14 h-14 rounded-full flex flex-col items-center justify-center border-2 shadow-sm shrink-0">
+                                <span id="scoreTutarsizlik" class="text-xl font-black leading-none">0</span>
+                                <span class="text-[9px] font-bold opacity-70 mt-0.5">/ 16</span>
+                            </div>
                         </div>
-                        <div id="boxTutarsizlik" class="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform shadow-sm shrink-0">
-                            <span id="scoreTutarsizlik" class="text-xl md:text-2xl font-black">0</span>
+                        <div>
+                            <div class="flex justify-between items-end mb-1.5">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase">Risk Seviyesi</span>
+                                <p id="textTutarsizlik" class="text-xs md:text-sm font-bold">-</p>
+                            </div>
+                            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden flex">
+                                <div id="barTutarsizlik" class="h-full transition-all duration-700"></div>
+                            </div>
+                            <div class="flex justify-between text-[9px] font-semibold text-slate-400 mt-1">
+                                <span>Güvenilir (0)</span>
+                                <span>Riskli (16)</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Sosyal Beğenirlik -->
-                    <div class="bg-white border border-slate-200 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm flex items-center justify-between group hover:border-slate-300 transition-colors">
-                        <div>
-                            <div class="flex flex-wrap items-center gap-2 md:gap-3 mb-1.5 md:mb-2">
-                                <h3 class="text-xs md:text-sm font-black text-slate-500 uppercase tracking-widest">Manipülasyon</h3>
-                                <span class="text-slate-500 text-[10px] md:text-xs font-black bg-slate-100 px-1.5 py-0.5 md:px-2 md:py-1 rounded-md border border-slate-200">MAKS: 15</span>
+                    <!-- Sosyal Beğenirlik (Manipülasyon) -->
+                    <div class="bg-white border border-slate-200 rounded-xl md:rounded-2xl p-5 shadow-sm flex flex-col justify-between group hover:border-slate-300 transition-colors relative">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="pr-4">
+                                <h3 class="text-sm font-black text-slate-700 uppercase tracking-widest flex items-center gap-2">
+                                    Sosyal Beğenirlik
+                                </h3>
+                                <p class="text-[11px] md:text-xs text-slate-500 mt-1.5 font-medium leading-snug">
+                                    Adayın gerçek eğilimlerini saklayarak, kendini işverene "kusursuz" gösterme çabasıdır (Fake Good). <strong class="text-slate-700">Puanın düşük olması adayın şeffaf olduğunu gösterir.</strong>
+                                </p>
                             </div>
-                            <p id="textFakeGood" class="text-sm md:text-base lg:text-lg font-bold mt-1">-</p>
+                            <div id="boxFakeGood" class="w-14 h-14 rounded-full flex flex-col items-center justify-center border-2 shadow-sm shrink-0">
+                                <span id="scoreFakeGood" class="text-xl font-black leading-none">0</span>
+                                <span class="text-[9px] font-bold opacity-70 mt-0.5">/ 15</span>
+                            </div>
                         </div>
-                        <div id="boxFakeGood" class="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform shadow-sm shrink-0">
-                            <span id="scoreFakeGood" class="text-xl md:text-2xl font-black">0</span>
+                        <div>
+                            <div class="flex justify-between items-end mb-1.5">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase">Risk Seviyesi</span>
+                                <p id="textFakeGood" class="text-xs md:text-sm font-bold">-</p>
+                            </div>
+                            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden flex">
+                                <div id="barFakeGood" class="h-full transition-all duration-700"></div>
+                            </div>
+                            <div class="flex justify-between text-[9px] font-semibold text-slate-400 mt-1">
+                                <span>Doğal (3)</span>
+                                <span>Manipülatif (15)</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Risk Banner -->
-                <div id="riskBanner" class="hidden flex bg-rose-50 border-l-[4px] md:border-l-[6px] border-rose-500 p-4 md:p-5 rounded-r-xl md:rounded-r-2xl items-start gap-3 md:gap-4 shadow-md">
-                    <svg class="w-6 h-6 md:w-8 md:h-8 shrink-0 mt-0.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    <div>
-                        <h4 class="font-black text-sm md:text-base lg:text-lg text-rose-900 leading-tight">Sistem Uyarısı: Riskli Metrikler Tespit Edildi</h4>
-                        <p id="riskText" class="text-xs md:text-sm lg:text-base text-rose-800 mt-1.5 font-semibold"></p>
+                <!-- Risk Banner (YENİDEN TASARLANDI) -->
+                <div id="riskBanner" class="hidden flex flex-col sm:flex-row bg-rose-50 border border-rose-200 p-4 md:p-5 rounded-xl items-start gap-3 md:gap-4 shadow-sm relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-rose-500"></div>
+                    <div class="bg-white p-2 rounded-full shadow-sm shrink-0 z-10">
+                        <svg class="w-6 h-6 md:w-7 md:h-7 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    </div>
+                    <div class="z-10">
+                        <h4 class="font-black text-sm md:text-base text-rose-900 leading-tight">Sistem Uyarısı: Mülakat Aşamasında Dikkat Edilmesi Gerekenler</h4>
+                        <p id="riskText" class="text-xs md:text-sm text-rose-800 mt-1.5 font-medium leading-relaxed"></p>
                     </div>
                 </div>
 
@@ -674,20 +712,21 @@
                 let nameStr = row["Ad Soyad"].split(' ')[0]; 
                 if(!nameStr || nameStr.toLowerCase() === "isimsiz") nameStr = "Aday";
 
-                if (genelSkor >= 75) aiSentences.push(`${nameStr}, kurum kültürümüze ve pozisyonun yetkinlik gerekliliklerine <strong>yüksek oranda uyum potansiyeli</strong> sergiliyor.`);
-                else if (genelSkor >= 60) aiSentences.push(`${nameStr}, genel hatlarıyla pozitif bir profil çizmekte olup, temel yetkinliklerde yeterli seviyede görünmektedir.`);
+                if (genelSkor >= 75) aiSentences.push(`${nameStr}, genel yetkinlik sorularında oldukça pozitif bir profil çizerek <strong>%${genelSkor} uyum skoruna</strong> ulaşmıştır.`);
+                else if (genelSkor >= 60) aiSentences.push(`${nameStr}, temel yetkinlik beklentilerini karşılayarak genel hatlarıyla yeterli bir profil çizmektedir.`);
                 else aiSentences.push(`${nameStr} adlı adayın genel yetkinlik skoru kurum beklentilerimizin altında kalmıştır.`);
 
                 if (isRisky) {
+                    aiSentences.push(`<br><br><span class="text-rose-600 font-bold">ANCAK;</span> sistem adayın profilinde güvenilirliği zedeleyebilecek metrikler tespit etmiştir.`);
                     if (tutarsizlik > 7 && fakeGoodSum > 12) {
-                        aiSentences.push(`Ancak profil güvenilirliğinde ciddi sorunlar mevcut. Yanıtlar arası yüksek tutarsızlık ve idealize edilmiş profil çizme (manipülasyon) çabası tespit edildi.`);
+                        aiSentences.push(`Adayın hem benzer sorulara verdiği yanıtlarda <strong>ciddi çelişkiler</strong> bulunmakta, hem de testin amacını anlayarak <strong>kendini ideal gösterme (manipülasyon)</strong> çabası bariz şekilde görülmektedir.`);
                     } else if (tutarsizlik > 7) {
-                        aiSentences.push(`Dikkat çeken en büyük unsur, benzer sorulara verilen <strong>yanıtlardaki yüksek tutarsızlıktır</strong>. Mülakatta tutumlarının çapraz sorularla doğrulanması önerilir.`);
+                        aiSentences.push(`Dikkat çeken en büyük unsur, birbirini doğrulayan çapraz sorulara verilen <strong>yanıtlardaki yüksek tutarsızlıktır</strong>. Bu durum, adayın soruları dikkatsizce okuduğunu veya istikrarsız bir yapıya sahip olduğunu gösterebilir.`);
                     } else if (fakeGoodSum > 12) {
-                        aiSentences.push(`Bununla birlikte, adayın "Sosyal Beğenirlik" skoru yüksektir. Envanter sonuçlarının gerçek davranış eğiliminden çok, "istenilen cevapları verme" motivasyonuyla şekillendiği gözlemlenmiştir.`);
+                        aiSentences.push(`Adayın "Sosyal Beğenirlik" skoru kritik seviyededir. Aday şeffaf yanıtlar vermek yerine, işverenin <strong>"duymak istediği"</strong> cevapları seçerek gerçek davranış eğilimlerini maskelemiş olabilir.`);
                     }
                 } else {
-                    aiSentences.push(`Cevap paternleri incelendiğinde son derece <strong>doğal ve dürüst</strong> bir veri seti elde edilmiştir.`);
+                    aiSentences.push(`Cevap paternleri incelendiğinde sapma ve manipülasyon görülmemiş, <strong>doğal ve güvenilir</strong> bir veri seti elde edilmiştir.`);
                 }
 
                 if (!isRisky && (badge.text === "Güçlü Aday" || badge.text === "Mülakata Uygun")) {
@@ -871,51 +910,77 @@
                 else circleGenel.className.baseVal = "text-slate-400 transition-all duration-1000 ease-out";
             }
 
+            // TUTARSIZLIK KARTI GÜNCELLEMESİ
             const tScore = candidate.metrics.tutarsizlik;
             document.getElementById('scoreTutarsizlik').innerText = tScore;
             const tText = document.getElementById('textTutarsizlik');
             const boxTut = document.getElementById('boxTutarsizlik');
             const scoreTutEl = document.getElementById('scoreTutarsizlik');
+            const barTut = document.getElementById('barTutarsizlik');
+            
+            // Progress Bar Genişliği (Max 16)
+            let tutPercent = Math.min((tScore / 16) * 100, 100);
+            barTut.style.width = tutPercent + '%';
             
             if (tScore > 7) { 
-                tText.innerText = "Yüksek Çelişki"; tText.className = "text-xs md:text-sm lg:text-base font-bold mt-1 md:mt-1.5 text-orange-600"; 
-                boxTut.className = "w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform bg-orange-50 border-orange-200 shrink-0";
-                scoreTutEl.className = "text-xl md:text-2xl font-black text-orange-700";
+                tText.innerText = "Yüksek Çelişki (Riskli)"; tText.className = "text-xs md:text-sm font-bold text-rose-600"; 
+                boxTut.className = "w-14 h-14 rounded-full flex flex-col items-center justify-center border-2 shadow-sm shrink-0 bg-rose-50 border-rose-200 text-rose-700";
+                barTut.className = "h-full transition-all duration-700 bg-rose-500";
             } else if (tScore >= 5) { 
-                tText.innerText = "Kabul Edilebilir Sapma"; tText.className = "text-xs md:text-sm lg:text-base font-bold mt-1 md:mt-1.5 text-slate-600"; 
-                boxTut.className = "w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform bg-slate-50 border-slate-200 shrink-0";
-                scoreTutEl.className = "text-xl md:text-2xl font-black text-slate-700";
+                tText.innerText = "Kabul Edilebilir Sapma"; tText.className = "text-xs md:text-sm font-bold text-amber-600"; 
+                boxTut.className = "w-14 h-14 rounded-full flex flex-col items-center justify-center border-2 shadow-sm shrink-0 bg-amber-50 border-amber-200 text-amber-700";
+                barTut.className = "h-full transition-all duration-700 bg-amber-400";
             } else { 
-                tText.innerText = "Çok Tutarlı Profil"; tText.className = "text-xs md:text-sm lg:text-base font-bold mt-1 md:mt-1.5 text-emerald-600"; 
-                boxTut.className = "w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform bg-emerald-50 border-emerald-200 shrink-0";
-                scoreTutEl.className = "text-xl md:text-2xl font-black text-emerald-700";
+                tText.innerText = "Düşük Çelişki (Güvenilir)"; tText.className = "text-xs md:text-sm font-bold text-emerald-600"; 
+                boxTut.className = "w-14 h-14 rounded-full flex flex-col items-center justify-center border-2 shadow-sm shrink-0 bg-emerald-50 border-emerald-200 text-emerald-700";
+                barTut.className = "h-full transition-all duration-700 bg-emerald-500";
             }
 
+            // MANİPÜLASYON KARTI GÜNCELLEMESİ
             const fgScore = candidate.metrics.fakeGoodSum;
             document.getElementById('scoreFakeGood').innerText = fgScore;
             const fgText = document.getElementById('textFakeGood');
             const boxFg = document.getElementById('boxFakeGood');
             const scoreFgEl = document.getElementById('scoreFakeGood');
+            const barFg = document.getElementById('barFakeGood');
+
+            // Progress Bar Genişliği (Max 15, Min 3) Hesaplama
+            let fgPercent = Math.max(0, Math.min(((fgScore - 3) / 12) * 100, 100));
+            barFg.style.width = fgPercent + '%';
 
             if (fgScore > 12) { 
-                fgText.innerText = "Yüksek Manipülasyon"; fgText.className = "text-xs md:text-sm lg:text-base font-bold mt-1 md:mt-1.5 text-rose-600"; 
-                boxFg.className = "w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform bg-rose-50 border-rose-200 shrink-0";
-                scoreFgEl.className = "text-xl md:text-2xl font-black text-rose-700";
+                fgText.innerText = "Yüksek Manipülasyon (Riskli)"; fgText.className = "text-xs md:text-sm font-bold text-rose-600"; 
+                boxFg.className = "w-14 h-14 rounded-full flex flex-col items-center justify-center border-2 shadow-sm shrink-0 bg-rose-50 border-rose-200 text-rose-700";
+                barFg.className = "h-full transition-all duration-700 bg-rose-500";
             } else if (fgScore >= 10) { 
-                fgText.innerText = "Hafif Eğilim"; fgText.className = "text-xs md:text-sm lg:text-base font-bold mt-1 md:mt-1.5 text-slate-600"; 
-                boxFg.className = "w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform bg-slate-50 border-slate-200 shrink-0";
-                scoreFgEl.className = "text-xl md:text-2xl font-black text-slate-700";
+                fgText.innerText = "Hafif Eğilim"; fgText.className = "text-xs md:text-sm font-bold text-amber-600"; 
+                boxFg.className = "w-14 h-14 rounded-full flex flex-col items-center justify-center border-2 shadow-sm shrink-0 bg-amber-50 border-amber-200 text-amber-700";
+                barFg.className = "h-full transition-all duration-700 bg-amber-400";
             } else { 
-                fgText.innerText = "Doğal ve Objektif"; fgText.className = "text-xs md:text-sm lg:text-base font-bold mt-1 md:mt-1.5 text-emerald-600"; 
-                boxFg.className = "w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 group-hover:scale-105 transition-transform bg-emerald-50 border-emerald-200 shrink-0";
-                scoreFgEl.className = "text-xl md:text-2xl font-black text-emerald-700";
+                fgText.innerText = "Doğal ve Şeffaf"; fgText.className = "text-xs md:text-sm font-bold text-emerald-600"; 
+                boxFg.className = "w-14 h-14 rounded-full flex flex-col items-center justify-center border-2 shadow-sm shrink-0 bg-emerald-50 border-emerald-200 text-emerald-700";
+                barFg.className = "h-full transition-all duration-700 bg-emerald-500";
             }
 
+            // RİSK BANNER GÜNCELLEMESİ
             const riskBanner = document.getElementById('riskBanner');
             if (tScore > 7 || fgScore > 12) {
                 riskBanner.classList.remove('hidden');
-                document.getElementById('riskText').innerText = `${fgScore > 12 ? 'Sosyal Beğenirlik (Manipülasyon) puanı çok yüksek. ' : ''}${tScore > 7 ? 'Cevaplar arası yüksek tutarsızlık tespit edildi.' : ''}`;
-            } else riskBanner.classList.add('hidden');
+                
+                let warningText = `Genel yetkinlik uyum skoru (%${candidate.metrics.genelSkor}) bağımsız olarak değerlendirildiğinde, adayın test sonuçlarında riskli metrikler bulunmuştur. <br/>`;
+                
+                if (tScore > 7 && fgScore > 12) {
+                    warningText += "• Adayın yanıtlarında çok <b>ciddi çelişkiler (Tutarsızlık: ${tScore}/16)</b> ve kendini idealize etme <b>(Manipülasyon: ${fgScore}/15)</b> çabası görülmektedir. Test sonuçları gerçeği yansıtmayabilir.";
+                } else if (tScore > 7) {
+                    warningText += `• Aday benzer durumu ölçen sorulara zıt yanıtlar vermiştir <b>(Tutarsızlık: ${tScore}/16)</b>. Mülakat esnasında adayın kararlılığını test edecek spesifik çapraz sorular sormanız (Örn: Hem ekip çalışmasını sevip hem de yalnız çalışmayı tercih etmesi gibi) tavsiye edilir.`;
+                } else if (fgScore > 12) {
+                    warningText += `• Aday kurumun beklentilerini tahmin ederek "olumlu görünme" kaygısıyla hareket etmiş olabilir <b>(Manipülasyon: ${fgScore}/15)</b>. Adayın mülakatta zayıf yönlerini kabul etme cesareti (Öz Farkındalık) özellikle test edilmelidir.`;
+                }
+                
+                document.getElementById('riskText').innerHTML = warningText;
+            } else {
+                riskBanner.classList.add('hidden');
+            }
 
             const dimList = document.getElementById('dimensionsList');
             dimList.innerHTML = "";
